@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Civic Review — Independent research on public life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16283F;
+    --navy-2:#22405f;
+    --navy-3:#0e1c2e;
+    --cream:#F6F1E4;
+    --cream-2:#EFE6D2;
+    --cream-3:#e7dcc2;
+    --ink:#1C1A16;
+    --ink-soft:#4a463d;
+    --gold:#A07A2B;
+    --gold-soft:#c7a35f;
+    --rule:rgba(22,40,63,0.16);
+    --rule-strong:rgba(22,40,63,0.32);
+    --serif-display:'Newsreader', Georgia, serif;
+    --serif-body:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', -apple-system, sans-serif;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:var(--serif-body); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold-soft); color:var(--navy-3);}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 40px;}
+  .eyebrow{
+    font-family:var(--sans); font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold); font-weight:600;
+  }
+  .eyebrow.navy{color:var(--navy-2);}
+  .eyebrow.on-dark{color:var(--gold-soft);}
+  .hr{border:none; border-top:1px solid var(--rule); margin:0;}
+  .hr-strong{border:none; border-top:1px solid var(--rule-strong); margin:0;}
+  h1,h2,h3,h4{font-family:var(--serif-display); font-weight:500; margin:0; color:var(--navy-3);}
+  em, i.em{font-style:italic;}
+  button{font-family:var(--sans); cursor:pointer;}
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+
+  /* ===== Top bar ===== */
+  .topbar{
+    border-bottom:1px solid var(--rule-strong);
+    background:var(--cream);
+    position:sticky; top:0; z-index:50;
+  }
+  .topbar-inner{
+    max-width:var(--maxw); margin:0 auto; padding:0 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:88px;
+  }
+  .brand{display:flex; align-items:center; gap:12px; cursor:pointer;}
+  .brand-mark{
+    width:34px; height:34px; background:var(--navy); color:var(--cream);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif-display); font-size:19px; flex-shrink:0;
+  }
+  .brand-word{font-family:var(--serif-display); font-size:21px; letter-spacing:0.01em; line-height:1;}
+  .brand-word .review{font-style:italic; color:var(--gold);}
+  .brand-sub{
+    font-family:var(--sans); font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink-soft); margin-top:3px;
+  }
+  nav.primary{display:flex; align-items:center; gap:30px;}
+  nav.primary a, .nav-link{
+    font-family:var(--sans); font-size:13px; letter-spacing:0.03em; color:var(--ink);
+    padding:6px 0; border-bottom:1px solid transparent; background:none; border-top:none; border-left:none; border-right:none;
+  }
+  nav.primary a:hover, .nav-link:hover{color:var(--gold); border-bottom-color:var(--gold);}
+  nav.primary a.active, .nav-link.active{color:var(--navy); border-bottom-color:var(--navy); font-weight:600;}
+  .search-icon{
+    background:none; border:1px solid var(--rule-strong); width:34px; height:34px; border-radius:0;
+    display:flex; align-items:center; justify-content:center; color:var(--ink);
+  }
+  .search-icon:hover{border-color:var(--gold); color:var(--gold);}
+  .mobile-nav-toggle{display:none; background:none; border:none; font-size:22px; color:var(--navy);}
+
+  @media(max-width:920px){
+    nav.primary{display:none;}
+    .mobile-nav-toggle{display:block;}
+  }
+
+  /* ===== Footer ===== */
+  footer{background:var(--navy-3); color:var(--cream-2); margin-top:120px;}
+  .footer-inner{max-width:var(--maxw); margin:0 auto; padding:64px 40px 40px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; padding-bottom:48px;}
+  .footer-grid h4{color:var(--cream); font-size:14px; margin-bottom:16px; font-weight:500;}
+  .footer-grid a{display:block; font-family:var(--sans); font-size:13px; color:#b9c2cd; padding:5px 0;}
+  .footer-grid a:hover{color:var(--gold-soft);}
+  .footer-brand-word{font-family:var(--serif-display); font-size:22px; color:var(--cream); margin-bottom:10px;}
+  .footer-brand-word .review{font-style:italic; color:var(--gold-soft);}
+  .footer-tagline{font-family:var(--serif-body); font-style:italic; color:#9fabb8; font-size:14.5px; max-width:320px; line-height:1.6;}
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.12); padding-top:24px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    font-family:var(--sans); font-size:12px; color:#8b96a3;
+  }
+  @media(max-width:800px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+
+  /* ===== Page shell ===== */
+  .page{display:none; padding-top:0;}
+  .page.active{display:block;}
+  section{padding:88px 0;}
+  section.tight{padding:56px 0;}
+  section.no-top{padding-top:0;}
+
+  /* ===== Hero (home) ===== */
+  .hero{padding:64px 0 72px; border-bottom:1px solid var(--rule-strong);}
+  .hero-top-row{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:44px;
+    font-family:var(--sans); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:64px; align-items:end;}
+  .hero h1{font-size:56px; line-height:1.08; letter-spacing:-0.01em;}
+  .hero h1 em{color:var(--gold); font-style:italic;}
+  .hero-dek{font-family:var(--serif-body); font-size:19px; color:var(--ink-soft); margin-top:24px; max-width:520px; line-height:1.6;}
+  .hero-side{border-left:1px solid var(--rule-strong); padding-left:36px;}
+  .hero-side p{font-family:var(--serif-body); font-size:15px; color:var(--ink-soft); line-height:1.7; margin:0 0 20px;}
+  .btn{
+    display:inline-block; font-family:var(--sans); font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:13px 26px; border:1px solid var(--navy); color:var(--navy); background:transparent;
+  }
+  .btn:hover{background:var(--navy); color:var(--cream);}
+  .btn.solid{background:var(--navy); color:var(--cream);}
+  .btn.solid:hover{background:var(--navy-2);}
+  .btn.small{padding:9px 18px; font-size:11px;}
+
+  /* ===== numbered field list ===== */
+  .num-list{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--rule-strong);}
+  .num-item{
+    border-bottom:1px solid var(--rule); border-right:1px solid var(--rule);
+    padding:32px 32px 32px 0; position:relative;
+  }
+  .num-item:nth-child(3n){border-right:none;}
+  .num-num{font-family:var(--serif-display); font-size:13px; color:var(--gold); font-style:italic; margin-bottom:14px; display:block;}
+  .num-item h3{font-size:22px; margin-bottom:10px;}
+  .num-item p{font-size:14.5px; color:var(--ink-soft); margin:0; line-height:1.6;}
+  @media(max-width:800px){ .num-list{grid-template-columns:1fr;} .num-item{border-right:none !important;} }
+
+  /* ===== section heading pattern ===== */
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; gap:24px; flex-wrap:wrap;}
+  .sec-head h2{font-size:34px;}
+  .sec-head .desc{font-family:var(--serif-body); color:var(--ink-soft); font-size:15px; max-width:420px; margin-top:10px;}
+
+  /* ===== Inside the review (4 cols) ===== */
+  .inside-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--rule-strong); border-left:1px solid var(--rule-strong);}
+  .inside-item{border-right:1px solid var(--rule-strong); border-bottom:1px solid var(--rule-strong); padding:36px 28px;}
+  .inside-item h3{font-size:19px; margin-bottom:8px;}
+  .inside-item p{font-size:13.5px; color:var(--ink-soft); margin:0;}
+  @media(max-width:900px){.inside-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ===== Volume preview / paper rows ===== */
+  .issue-frame{border:1px solid var(--rule-strong); padding:48px;}
+  .issue-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; flex-wrap:wrap; gap:10px;}
+  .issue-head h2{font-size:30px;}
+  .issue-meta{font-family:var(--sans); font-size:12px; color:var(--ink-soft); letter-spacing:0.03em;}
+  .issue-theme{font-family:var(--serif-body); font-style:italic; color:var(--gold); font-size:16px; margin:8px 0 32px;}
+
+  .paper-row{
+    display:grid; grid-template-columns:50px 1fr auto; gap:24px; align-items:start;
+    padding:26px 0; border-top:1px solid var(--rule);
+  }
+  .paper-row:last-child{border-bottom:1px solid var(--rule);}
+  .paper-idx{font-family:var(--serif-display); font-style:italic; color:var(--gold); font-size:15px; padding-top:2px;}
+  .paper-field{font-family:var(--sans); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;}
+  .paper-title{font-family:var(--serif-display); font-size:20px; font-weight:500; color:var(--navy-3); line-height:1.35; cursor:pointer;}
+  .paper-title:hover{color:var(--gold);}
+  .paper-authors{font-family:var(--serif-body); font-size:13.5px; color:var(--ink-soft); margin-top:6px;}
+  .paper-abstract{font-family:var(--serif-body); font-size:14px; color:var(--ink-soft); margin-top:10px; max-width:640px; line-height:1.6;}
+  .paper-link{font-family:var(--sans); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--navy); white-space:nowrap; padding-top:4px;}
+  .paper-link:hover{color:var(--gold);}
+
+  /* ===== filter tabs ===== */
+  .filter-row{display:flex; gap:0; flex-wrap:wrap; border-bottom:1px solid var(--rule-strong); margin-bottom:8px;}
+  .filter-tab{
+    background:none; border:none; font-family:var(--sans); font-size:12.5px; letter-spacing:0.04em;
+    text-transform:uppercase; padding:12px 20px 12px 0; margin-right:20px; color:var(--ink-soft);
+    border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .filter-tab:hover{color:var(--navy);}
+  .filter-tab.active{color:var(--navy); border-bottom-color:var(--gold); font-weight:600;}
+
+  /* ===== volume list (volumes page) ===== */
+  .volume-card{
+    display:grid; grid-template-columns:120px 1fr auto; gap:28px; align-items:center;
+    padding:28px 0; border-top:1px solid var(--rule);
+  }
+  .volume-card:last-child{border-bottom:1px solid var(--rule);}
+  .volume-num{font-family:var(--serif-display); font-size:32px; color:var(--navy); font-style:italic;}
+  .volume-title{font-family:var(--serif-display); font-size:20px; color:var(--navy-3); margin-bottom:6px;}
+  .volume-sub{font-family:var(--sans); font-size:12px; color:var(--ink-soft); letter-spacing:0.03em;}
+  .tag-current{
+    font-family:var(--sans); font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--gold); border:1px solid var(--gold-soft); padding:4px 10px; margin-left:12px;
+  }
+
+  /* ===== archive list / search ===== */
+  .archive-toolbar{display:flex; gap:16px; margin-bottom:36px; flex-wrap:wrap; align-items:center;}
+  .archive-toolbar input[type=text]{
+    flex:1; min-width:240px; font-family:var(--serif-body); font-size:15px; padding:12px 16px;
+    border:1px solid var(--rule-strong); background:var(--cream); color:var(--ink);
+  }
+  .archive-toolbar select{
+    font-family:var(--sans); font-size:12.5px; padding:12px 14px; border:1px solid var(--rule-strong);
+    background:var(--cream); color:var(--ink); letter-spacing:0.02em;
+  }
+  .archive-row{
+    display:grid; grid-template-columns:90px 1fr 170px; gap:20px; align-items:baseline;
+    padding:20px 0; border-top:1px solid var(--rule); font-family:var(--serif-body);
+  }
+  .archive-row:last-child{border-bottom:1px solid var(--rule);}
+  .archive-vol{font-family:var(--sans); font-size:11px; color:var(--ink-soft); letter-spacing:0.03em;}
+  .archive-title{font-size:16.5px; color:var(--navy-3); cursor:pointer;}
+  .archive-title:hover{color:var(--gold);}
+  .archive-author{font-size:13px; color:var(--ink-soft); font-style:italic; text-align:right;}
+  .archive-empty{padding:60px 0; text-align:center; color:var(--ink-soft); font-style:italic;}
+
+  /* ===== people (authors / board) ===== */
+  .people-grid{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--rule-strong); border-left:1px solid var(--rule-strong);}
+  .person{border-right:1px solid var(--rule-strong); border-bottom:1px solid var(--rule-strong); padding:32px 28px;}
+  .person-name{font-family:var(--serif-display); font-size:19px; color:var(--navy-3); margin-bottom:4px;}
+  .person-role{font-family:var(--sans); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--gold); margin-bottom:10px;}
+  .person-aff{font-family:var(--serif-body); font-size:13.5px; color:var(--ink-soft); font-style:italic; margin-bottom:10px;}
+  .person-focus{font-family:var(--serif-body); font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+  @media(max-width:900px){.people-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ===== about page ===== */
+  .about-lede{font-family:var(--serif-display); font-size:26px; font-weight:500; line-height:1.5; color:var(--navy-3); max-width:820px;}
+  .about-lede em{color:var(--gold); font-style:italic;}
+  .prose{font-family:var(--serif-body); font-size:16.5px; color:var(--ink-soft); line-height:1.85; max-width:720px;}
+  .prose p{margin:0 0 22px;}
+  .prose h3{color:var(--navy-3); font-size:22px; margin:44px 0 16px;}
+  .pull{
+    border-left:3px solid var(--gold); padding-left:28px; margin:44px 0;
+    font-family:var(--serif-display); font-style:italic; font-size:22px; color:var(--navy); line-height:1.5; max-width:640px;
+  }
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--rule-strong); border-bottom:1px solid var(--rule-strong); margin:48px 0;}
+  .stat{padding:28px 24px 28px 0; border-right:1px solid var(--rule);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-family:var(--serif-display); font-size:38px; color:var(--navy); font-style:italic;}
+  .stat-label{font-family:var(--sans); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-top:6px;}
+  @media(max-width:800px){.stat-row{grid-template-columns:1fr 1fr;}}
+
+  /* ===== submit page ===== */
+  .submit-grid{display:grid; grid-template-columns:1fr 380px; gap:64px;}
+  .step-list{counter-reset:step;}
+  .step{display:grid; grid-template-columns:44px 1fr; gap:18px; padding:24px 0; border-top:1px solid var(--rule);}
+  .step:last-child{border-bottom:1px solid var(--rule);}
+  .step-num{font-family:var(--serif-display); font-style:italic; font-size:20px; color:var(--gold);}
+  .step h4{font-size:17px; margin-bottom:6px; color:var(--navy-3);}
+  .step p{font-family:var(--serif-body); font-size:14px; color:var(--ink-soft); margin:0; line-height:1.6;}
+  .side-panel{background:var(--cream-2); border:1px solid var(--rule-strong); padding:32px;}
+  .side-panel h4{font-size:16px; margin-bottom:14px;}
+  .side-panel ul{margin:0; padding-left:18px; font-family:var(--serif-body); font-size:13.5px; color:var(--ink-soft); line-height:1.9;}
+  @media(max-width:900px){.submit-grid{grid-template-columns:1fr;}}
+
+  /* ===== guidelines page ===== */
+  .guide-layout{display:grid; grid-template-columns:240px 1fr; gap:64px; align-items:start;}
+  .guide-toc{position:sticky; top:120px; border-left:1px solid var(--rule-strong); padding-left:24px;}
+  .guide-toc a{display:block; font-family:var(--sans); font-size:12.5px; color:var(--ink-soft); padding:7px 0; letter-spacing:0.02em;}
+  .guide-toc a:hover{color:var(--gold);}
+  .guide-section{padding:36px 0; border-top:1px solid var(--rule);}
+  .guide-section:first-child{border-top:none; padding-top:0;}
+  .guide-section h3{font-size:24px; margin-bottom:16px;}
+  .guide-num{font-family:var(--serif-display); font-style:italic; color:var(--gold); font-size:14px; margin-right:8px;}
+  @media(max-width:900px){.guide-layout{grid-template-columns:1fr;} .guide-toc{position:static; border-left:none; padding-left:0; margin-bottom:32px; border-bottom:1px solid var(--rule-strong); padding-bottom:20px;}}
+
+  .flow-strip{display:flex; overflow-x:auto; gap:0; border:1px solid var(--rule-strong); margin:36px 0;}
+  .flow-step{
+    flex:1; min-width:150px; padding:22px 18px; border-right:1px solid var(--rule-strong);
+    font-family:var(--sans);
+  }
+  .flow-step:last-child{border-right:none;}
+  .flow-step .n{font-family:var(--serif-display); font-style:italic; color:var(--gold); font-size:16px; display:block; margin-bottom:8px;}
+  .flow-step .t{font-size:12.5px; letter-spacing:0.02em; color:var(--navy-3); font-weight:600; line-height:1.4;}
+
+  /* ===== notice / CTA banner ===== */
+  .notice{
+    border-top:1px solid var(--rule-strong); border-bottom:1px solid var(--rule-strong);
+    padding:44px 0; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .notice p{font-family:var(--serif-display); font-size:20px; font-style:italic; color:var(--navy-3); margin:0; max-width:560px;}
+
+  /* ===== Dashboard ===== */
+  .dash-gate{
+    max-width:420px; margin:110px auto; text-align:center;
+  }
+  .dash-gate .brand-mark{margin:0 auto 24px;}
+  .dash-gate h2{font-size:26px; margin-bottom:10px;}
+  .dash-gate p{font-family:var(--serif-body); color:var(--ink-soft); font-size:14.5px; margin-bottom:32px;}
+  .dash-gate input{
+    width:100%; font-family:var(--serif-body); font-size:15px; padding:13px 16px;
+    border:1px solid var(--rule-strong); background:var(--cream); margin-bottom:14px; color:var(--ink);
+  }
+  .dash-shell{display:none;}
+  .dash-shell.active{display:block;}
+  .dash-header{background:var(--navy-3); color:var(--cream); padding:22px 0; margin-bottom:0;}
+  .dash-header .wrap{display:flex; justify-content:space-between; align-items:center;}
+  .dash-header .brand-word{color:var(--cream);}
+  .dash-tabs{background:var(--navy); border-bottom:1px solid rgba(255,255,255,0.1);}
+  .dash-tabs .wrap{display:flex; gap:2px;}
+  .dash-tab{
+    background:none; border:none; color:#c7d0da; font-family:var(--sans); font-size:12.5px; letter-spacing:0.03em;
+    padding:16px 20px; border-bottom:2px solid transparent;
+  }
+  .dash-tab:hover{color:#fff;}
+  .dash-tab.active{color:#fff; border-bottom-color:var(--gold-soft); font-weight:600;}
+  .dash-panel{display:none; padding:48px 0;}
+  .dash-panel.active{display:block;}
+  .dash-metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule-strong); border:1px solid var(--rule-strong); margin-bottom:48px;}
+  .dash-metric{background:var(--cream); padding:26px 24px;}
+  .dash-metric .num{font-family:var(--serif-display); font-size:34px; color:var(--navy); font-style:italic;}
+  .dash-metric .lbl{font-family:var(--sans); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-top:6px;}
+  .board-cols{display:grid; grid-template-columns:repeat(7,1fr); gap:16px;}
+  .board-col-head{font-family:var(--sans); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); padding-bottom:12px; border-bottom:2px solid var(--rule-strong); margin-bottom:14px;}
+  .board-card{
+    background:var(--cream); border:1px solid var(--rule-strong); padding:14px; margin-bottom:12px; cursor:grab;
+    font-family:var(--sans);
+  }
+  .board-card .t{font-family:var(--serif-body); font-size:13.5px; color:var(--navy-3); line-height:1.4; margin-bottom:8px;}
+  .board-card .a{font-size:10.5px; color:var(--ink-soft);}
+  .board-card.dragging{opacity:0.4;}
+  .board-col{background:rgba(160,122,43,0.04); min-height:120px; padding:4px;}
+  .board-col.dragover{background:rgba(160,122,43,0.14); outline:1px dashed var(--gold-soft);}
+  @media(max-width:1100px){.board-cols{grid-template-columns:1fr; }}
+
+  .dash-table{width:100%; border-collapse:collapse; font-family:var(--sans); font-size:13px;}
+  .dash-table th{text-align:left; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); padding:0 16px 14px 0; border-bottom:2px solid var(--rule-strong); font-weight:600;}
+  .dash-table td{padding:16px 16px 16px 0; border-bottom:1px solid var(--rule); vertical-align:top;}
+  .status-pill{font-family:var(--sans); font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; padding:4px 10px; border:1px solid var(--rule-strong); display:inline-block;}
+  .status-pill.review{color:#8a5a00; border-color:#c9a44c;}
+  .status-pill.editing{color:var(--navy); border-color:var(--navy-2);}
+  .status-pill.scheduled{color:#5c3d99; border-color:#8f6fc9;}
+  .status-pill.published{color:#1c6e3f; border-color:#4c9b6f;}
+  .status-pill.approved{color:#1c6e3f; border-color:#4c9b6f;}
+
+  .editor-shell{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--rule-strong);}
+  .editor-pane{padding:32px; border-right:1px solid var(--rule-strong);}
+  .editor-pane label{display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin:18px 0 6px;}
+  .editor-pane label:first-child{margin-top:0;}
+  .editor-pane input, .editor-pane textarea{
+    width:100%; font-family:var(--serif-body); font-size:14.5px; padding:10px 12px; border:1px solid var(--rule-strong);
+    background:var(--cream); color:var(--ink);
+  }
+  .editor-pane textarea{resize:vertical; line-height:1.6;}
+  .editor-toolbar{display:flex; gap:6px; margin-bottom:8px;}
+  .editor-toolbar button{
+    background:var(--cream-2); border:1px solid var(--rule-strong); font-family:var(--serif-display); font-size:13px;
+    width:30px; height:30px;
+  }
+  .editor-toolbar button:hover{background:var(--gold-soft); color:#fff;}
+  .preview-pane{padding:40px; background:#fff;}
+  .preview-pane .paper-title{cursor:default;}
+  .preview-pane .paper-title:hover{color:var(--navy-3);}
+  @media(max-width:900px){.editor-shell{grid-template-columns:1fr;} .editor-pane{border-right:none; border-bottom:1px solid var(--rule-strong);}}
+
+  .empty-state{text-align:center; padding:70px 20px; color:var(--ink-soft); font-family:var(--serif-body); font-style:italic;}
+
+  @media(max-width:700px){
+    .hero-grid{grid-template-columns:1fr;} .hero-side{border-left:none; padding-left:0; border-top:1px solid var(--rule-strong); padding-top:28px;}
+    .hero h1{font-size:38px;}
+    .wrap, .topbar-inner{padding:0 22px;}
+    .num-list, .inside-grid, .people-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:1fr 1fr;}
+    .archive-row, .volume-card, .paper-row{grid-template-columns:1fr;}
+    .dash-metrics{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" onclick="go('home')">
+      <div class="brand-mark">C</div>
+      <div>
+        <div class="brand-word">The Civic <span class="review">Review</span></div>
+        <div class="brand-sub">Interdisciplinary Research</div>
+      </div>
+    </div>
+    <nav class="primary" id="primaryNav">
+      <a href="#" data-page="research" onclick="return navClick(event,'research')">Research</a>
+      <a href="#" data-page="volumes" onclick="return navClick(event,'volumes')">Volumes</a>
+      <a href="#" data-page="archive" onclick="return navClick(event,'archive')">Archive</a>
+      <a href="#" data-page="authors" onclick="return navClick(event,'authors')">Authors</a>
+      <a href="#" data-page="board" onclick="return navClick(event,'board')">Editorial Board</a>
+      <a href="#" data-page="about" onclick="return navClick(event,'about')">About</a>
+      <a href="#" data-page="submit" onclick="return navClick(event,'submit')">Submit Research</a>
+      <button class="search-icon" aria-label="Search" onclick="openSearch()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+    </nav>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">&#9776;</button>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+  <section class="hero no-top">
+    <div class="wrap">
+      <div class="hero-top-row">
+        <span id="heroVolumeLine">First issue in preparation</span>
+        <span>ISSN pending assignment</span>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <h1>Independent research on the ideas, <em>institutions</em>, and economies shaping public life.</h1>
+          <p class="hero-dek">The Civic Review is an interdisciplinary journal publishing rigorous, accessible research across economics, philosophy, politics, public policy, education, and technology &amp; society — read internationally.</p>
+          <div style="margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;">
+            <button class="btn solid" onclick="go('volumes')">Read the current volume</button>
+            <button class="btn" onclick="go('submit')">Submit research</button>
+          </div>
+        </div>
+        <div class="hero-side">
+          <span class="eyebrow navy">About the Review</span>
+          <p style="margin-top:14px;">A peer-reviewed, editorially independent publication with contributors and reviewers across South Asia, Europe, and North America. Published on a bi-weekly cadence.</p>
+          <p><a href="#" onclick="return navClick(event,'about')" style="border-bottom:1px solid var(--gold); color:var(--navy);">Read our editorial philosophy →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">— What We Publish</span>
+          <h2 style="margin-top:10px;">Six fields, one civic question</h2>
+        </div>
+        <p class="desc">Every discipline the Review covers is, at root, a study of how people organize, govern, argue, and build shared institutions.</p>
+      </div>
+      <div class="num-list" id="fieldsList"></div>
+    </div>
+  </section>
+
+  <section class="tight" style="padding-top:0;">
+    <div class="wrap">
+      <span class="eyebrow">— Inside the Review</span>
+      <h2 style="margin-top:10px; margin-bottom:36px;">What each issue contains</h2>
+      <div class="inside-grid" id="insideGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">— Current Issue</span>
+      <div class="issue-frame" style="margin-top:20px;">
+        <div class="issue-head">
+          <h2>Volume VII, No. 3</h2>
+          <span class="issue-meta">Published 4 August 2026 &nbsp;·&nbsp; 6 papers</span>
+        </div>
+        <div class="issue-theme">Institutions Under Strain</div>
+        <div id="homePapers"></div>
+        <div style="margin-top:28px;">
+          <button class="btn small" onclick="go('volumes')">View full volume</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="notice">
+        <p>The Review is currently reading submissions for Volume VII, No. 5 — interdisciplinary work on institutions, technology, and public life is especially welcome.</p>
+        <button class="btn solid" onclick="go('submit')">View submission guidelines</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ RESEARCH ============ -->
+<div class="page" id="page-research">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Research</span>
+      <h1 style="font-size:42px; margin-top:12px;">Browse by field</h1>
+      <p class="prose" style="margin-top:18px; font-size:16px;">Every paper published in the Review, organized by discipline. Select a field to narrow the list, or read across all six.</p>
+      <div class="filter-row" id="researchFilters" style="margin-top:36px;"></div>
+      <div id="researchList" style="margin-top:8px;"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ VOLUMES ============ -->
+<div class="page" id="page-volumes">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Volumes</span>
+      <h1 style="font-size:42px; margin-top:12px;">Issues, in sequence</h1>
+      <p class="prose" style="margin-top:18px; font-size:16px;">The Review publishes on a bi-weekly cadence. Each volume is themed and editorially introduced.</p>
+      <div id="volumesList" style="margin-top:36px;"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ARCHIVE ============ -->
+<div class="page" id="page-archive">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Archive</span>
+      <h1 style="font-size:42px; margin-top:12px;">The full record</h1>
+      <p class="prose" style="margin-top:18px; font-size:16px; margin-bottom:36px;">Every paper the Review has published, searchable by title, author, or field.</p>
+      <div class="archive-toolbar">
+        <input type="text" id="archiveSearch" placeholder="Search by title or author" oninput="renderArchive()">
+        <select id="archiveField" onchange="renderArchive()">
+          <option value="">All fields</option>
+        </select>
+      </div>
+      <div id="archiveList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ AUTHORS ============ -->
+<div class="page" id="page-authors">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Authors</span>
+      <h1 style="font-size:42px; margin-top:12px;">Contributors</h1>
+      <p class="prose" style="margin-top:18px; font-size:16px; margin-bottom:36px;">Researchers and writers published in the Review.</p>
+      <div class="people-grid" id="authorsGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ EDITORIAL BOARD ============ -->
+<div class="page" id="page-board">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Editorial Board</span>
+      <h1 style="font-size:42px; margin-top:12px;">Editorial Board</h1>
+      <p class="prose" style="margin-top:18px; font-size:16px; margin-bottom:36px;">The editorial core, with reviewers and contributing editors based internationally.</p>
+      <div class="people-grid" id="boardGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="page" id="page-about">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— About</span>
+      <p class="about-lede" style="margin-top:16px;">The Civic Review is an independently run research journal, publishing in English for an interdisciplinary, international readership.</p>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num" id="statVolumes">0</div><div class="stat-label">Volumes published</div></div>
+        <div class="stat"><div class="stat-num" id="statPapers">0</div><div class="stat-label">Papers in the archive</div></div>
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">Fields of study</div></div>
+        <div class="stat"><div class="stat-num" id="statAuthors">0</div><div class="stat-label">Contributors</div></div>
+      </div>
+
+      <div class="prose">
+        <h3>Mission &amp; scope</h3>
+        <p>The Review exists to publish research that is rigorous without being inaccessible, and accessible without sacrificing rigor. We cover economics, philosophy, politics, public policy, education, and technology &amp; society — six fields we treat as facets of a single, older question: how people organize, govern, argue, and build shared institutions.</p>
+        <p>Our editorial team and our contributor base are international by design. A paper is accepted on the strength of its argument and evidence, not the geography of its author.</p>
+
+        <div class="pull">"Civic" describes not a nationality but a method — the disciplined study of how shared life is organized.</div>
+
+        <h3>Editorial independence</h3>
+        <p>The Civic Review is not affiliated with any government, political party, university, or corporate sponsor. Editorial decisions — what is commissioned, what is accepted, what is corrected — rest solely with the editorial board, governed by the standards set out in our <a href="#" onclick="return navClick(event,'guidelines')" style="color:var(--navy); border-bottom:1px solid var(--gold);">editing guidelines</a>.</p>
+
+        <h3>Publication practice</h3>
+        <p>Issues are released on a bi-weekly cadence. Each volume carries a short editorial introduction situating that issue's papers within a broader theme, though papers are also indexed individually by field in the <a href="#" onclick="return navClick(event,'archive')" style="color:var(--navy); border-bottom:1px solid var(--gold);">archive</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SUBMIT ============ -->
+<div class="page" id="page-submit">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Submit Research</span>
+      <h1 style="font-size:42px; margin-top:12px; margin-bottom:36px;">Submission guidelines</h1>
+      <div class="submit-grid">
+        <div>
+          <p class="prose" style="margin-bottom:8px;">The Review accepts original research across all six of its fields on a rolling basis. Submissions are read by the editorial team in the order received; most authors hear back within three weeks.</p>
+          <div class="step-list">
+            <div class="step"><div class="step-num">01</div><div><h4>Prepare your manuscript</h4><p>Follow the structure and citation standards set out in our <a href="#" onclick="return navClick(event,'guidelines')" style="color:var(--navy); border-bottom:1px solid var(--gold);">editing guidelines</a> — title, abstract, keywords, and a clearly stated research question.</p></div></div>
+            <div class="step"><div class="step-num">02</div><div><h4>Include author details</h4><p>Full name, institutional affiliation (if any), and a two-sentence author note.</p></div></div>
+            <div class="step"><div class="step-num">03</div><div><h4>Submit through the form below</h4><p>Attach your manuscript and it goes straight to the editorial team — no email required.</p></div></div>
+            <div class="step"><div class="step-num">04</div><div><h4>Editorial review</h4><p>Your paper moves through initial review, fact-checking, and editing before a final decision — see the full process in our guidelines.</p></div></div>
+          </div>
+        </div>
+        <div class="side-panel">
+          <h4>Before you submit</h4>
+          <ul>
+            <li>Manuscripts should generally run 1,000–6,000 words</li>
+            <li>Original, unpublished work only</li>
+            <li>Disclose any AI-assisted research or writing</li>
+            <li>Include full citations for all sources</li>
+            <li>One submission under review per author at a time</li>
+          </ul>
+          <div style="margin-top:24px;">
+            <button class="btn small solid" onclick="go('guidelines')">Read full editing guidelines</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-panel" style="margin-top:40px; max-width:640px;">
+        <h4>Submit your manuscript</h4>
+        <div style="display:grid; gap:16px; margin-top:12px;">
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Title</label>
+            <input type="text" id="pubTitle" placeholder="Paper title" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+          </div>
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Author &amp; affiliation</label>
+            <input type="text" id="pubAuthor" placeholder="Full name — affiliation" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+          </div>
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Field</label>
+            <select id="pubField" style="width:100%; font-family:var(--sans); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></select>
+          </div>
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Abstract</label>
+            <textarea id="pubAbstract" rows="5" placeholder="Short abstract" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+          </div>
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Manuscript file (PDF or Word)</label>
+            <input type="file" id="pubFile" accept=".pdf,.doc,.docx" style="width:100%; font-family:var(--sans); font-size:13px;">
+          </div>
+          <div id="pubSubmitStatus" style="display:none; font-family:var(--sans); font-size:12.5px;"></div>
+          <div>
+            <button class="btn small solid" id="pubSubmitBtn" onclick="submitPublicPaper()">Submit manuscript</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ EDITING GUIDELINES ============ -->
+<div class="page" id="page-guidelines">
+  <section style="padding-top:56px;">
+    <div class="wrap">
+      <span class="eyebrow">— Editing Guidelines</span>
+      <h1 style="font-size:42px; margin-top:12px; margin-bottom:8px;">How the Review edits and evaluates research</h1>
+      <p class="prose" style="margin-bottom:44px; font-size:16px;">These guidelines describe the standards, structure, and process the Review applies to every submission — for authors, editors, and readers alike.</p>
+
+      <div class="guide-layout">
+        <div class="guide-toc">
+          <a href="#g1">01 — Purpose &amp; philosophy</a>
+          <a href="#g2">02 — Research standards</a>
+          <a href="#g3">03 — Writing style</a>
+          <a href="#g4">04 — Paper structure</a>
+          <a href="#g5">05 — Citations &amp; references</a>
+          <a href="#g6">06 — Fact-checking &amp; sources</a>
+          <a href="#g7">07 — Editorial review process</a>
+          <a href="#g8">08 — Language &amp; tone</a>
+          <a href="#g9">09 — Academic integrity</a>
+          <a href="#g10">10 — AI &amp; research</a>
+          <a href="#g11">11 — Corrections</a>
+        </div>
+
+        <div>
+          <div class="guide-section" id="g1">
+            <h3><span class="guide-num">01</span>Purpose &amp; editorial philosophy</h3>
+            <div class="prose"><p>The Review publishes rigorous, accessible, interdisciplinary research across the humanities, economics, philosophy, public policy, and business. We value intellectual independence, clarity of argument, evidence-based reasoning, and dialogue across disciplinary lines over adherence to any single school of thought.</p></div>
+          </div>
+          <div class="guide-section" id="g2">
+            <h3><span class="guide-num">02</span>Research standards</h3>
+            <div class="prose"><p>Accepted work states a clear research question, offers original analysis rather than summary, draws on appropriate evidence, cites sources accurately, is transparent about methodology, argues logically from premise to conclusion, upholds academic integrity throughout, and engages seriously with existing scholarship in its field.</p></div>
+          </div>
+          <div class="guide-section" id="g3">
+            <h3><span class="guide-num">03</span>Writing style</h3>
+            <div class="prose"><p>Writing should be precise, concise, and analytical — accessible to an interdisciplinary readership rather than a narrow specialist audience. Avoid unnecessary jargon; where a specialist concept is essential, explain it rather than assume it. Every paper should be structured around one clear argument.</p></div>
+          </div>
+          <div class="guide-section" id="g4">
+            <h3><span class="guide-num">04</span>Structure of research papers</h3>
+            <div class="prose"><p>The recommended structure — flexible by discipline — is: title; author and affiliation; abstract; keywords; introduction; research question or thesis; methodology or approach; analysis; discussion; conclusion; and references.</p></div>
+          </div>
+          <div class="guide-section" id="g5">
+            <h3><span class="guide-num">05</span>Citations &amp; references</h3>
+            <div class="prose"><p>Authors should use a single citation system consistently throughout a paper. Guidance is available for citing books, journal articles, websites, government publications, datasets, interviews, and primary sources — consult the editorial team if your source type isn't covered.</p></div>
+          </div>
+          <div class="guide-section" id="g6">
+            <h3><span class="guide-num">06</span>Fact-checking &amp; sources</h3>
+            <div class="prose"><p>The Review favors peer-reviewed research, academic books, government publications, official datasets, primary documents, and reputable institutional sources. Unsupported claims and citation padding — sources listed but not meaningfully engaged with — are both discouraged and checked for during review.</p></div>
+          </div>
+          <div class="guide-section" id="g7">
+            <h3><span class="guide-num">07</span>Editorial review process</h3>
+            <div class="prose"><p>Every submission moves through the same sequence before publication:</p></div>
+            <div class="flow-strip">
+              <div class="flow-step"><span class="n">01</span><span class="t">Submission</span></div>
+              <div class="flow-step"><span class="n">02</span><span class="t">Initial editorial review</span></div>
+              <div class="flow-step"><span class="n">03</span><span class="t">Research &amp; fact check</span></div>
+              <div class="flow-step"><span class="n">04</span><span class="t">Editing</span></div>
+              <div class="flow-step"><span class="n">05</span><span class="t">Author review</span></div>
+              <div class="flow-step"><span class="n">06</span><span class="t">Final approval</span></div>
+              <div class="flow-step"><span class="n">07</span><span class="t">Publication</span></div>
+            </div>
+          </div>
+          <div class="guide-section" id="g8">
+            <h3><span class="guide-num">08</span>Language &amp; tone</h3>
+            <div class="prose"><p>Intellectual, measured, analytical, evidence-based, and accessible. The Review does not publish sensationalism or clickbait — nor does it reward overwrought academic prose written to impress rather than inform.</p></div>
+          </div>
+          <div class="guide-section" id="g9">
+            <h3><span class="guide-num">09</span>Originality &amp; academic integrity</h3>
+            <div class="prose"><p>Authors are responsible for the originality of their work and for attributing all sources used. Plagiarism, data fabrication or manipulation, and undisclosed conflicts of interest are grounds for rejection or, if discovered post-publication, retraction.</p></div>
+          </div>
+          <div class="guide-section" id="g10">
+            <h3><span class="guide-num">10</span>AI &amp; research</h3>
+            <div class="prose"><p>Responsible use of AI tools is permitted for brainstorming, language editing, formatting, and preliminary research assistance. Authors remain fully responsible for the accuracy, originality, citations, arguments, data, and final quality of the submitted work. AI-generated citations or claims must never be presented as verified research without independent confirmation.</p></div>
+          </div>
+          <div class="guide-section" id="g11">
+            <h3><span class="guide-num">11</span>Editorial corrections</h3>
+            <div class="prose"><p>Minor errors are corrected with a visible editorial notice on the published paper. Substantive errors may prompt an author correction or, where the paper's core claims are compromised, a retraction. A correction record is maintained and displayed alongside every published paper it applies to.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ EDITORIAL DASHBOARD (PRIVATE) ============ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-gate" id="dashGate">
+    <div class="brand-mark">C</div>
+
+    <div id="gateLoading">
+      <h2>Editorial Dashboard</h2>
+      <p>Checking access…</p>
+    </div>
+
+    <div id="gateSetup" style="display:none;">
+      <h2>Set up owner access</h2>
+      <p>No passphrase has been set for this dashboard yet. Choose one now — only people who know it will be able to sign in as the owner. This is a private safeguard, not enterprise-grade security: anyone with your file's source could bypass it, so don't use a password you rely on elsewhere.</p>
+      <input type="password" id="setupPass" placeholder="Choose a passphrase" autocomplete="new-password">
+      <input type="password" id="setupPassConfirm" placeholder="Confirm passphrase" autocomplete="new-password">
+      <div id="setupError" style="display:none; color:#a32d2d; font-family:var(--sans); font-size:12.5px; margin-bottom:14px; text-align:left;"></div>
+      <button class="btn solid" style="width:100%; margin-top:6px;" onclick="setupOwnerPassphrase()">Set passphrase and sign in</button>
+    </div>
+
+    <div id="gateLogin" style="display:none;">
+      <h2>Editorial Dashboard</h2>
+      <p>Owner access only. Enter the dashboard passphrase to continue.</p>
+      <input type="password" id="loginPass" placeholder="Passphrase" autocomplete="current-password" onkeydown="if(event.key==='Enter') attemptLogin()">
+      <div id="loginError" style="display:none; color:#a32d2d; font-family:var(--sans); font-size:12.5px; margin-bottom:14px; text-align:left;"></div>
+      <button class="btn solid" style="width:100%; margin-top:6px;" onclick="attemptLogin()">Sign in</button>
+    </div>
+
+    <p style="margin-top:24px; font-size:12.5px;"><a href="#" onclick="return navClick(event,'home')" style="border-bottom:1px solid var(--rule-strong);">← Back to the Review</a></p>
+  </div>
+
+  <div class="dash-shell" id="dashShell">
+    <div class="dash-header">
+      <div class="wrap">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="brand-mark">C</div>
+          <div>
+            <div class="brand-word">The Civic <span class="review">Review</span></div>
+            <div style="font-family:var(--sans); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#8b96a3; margin-top:2px;">Editorial Dashboard</div>
+          </div>
+        </div>
+        <div style="font-family:var(--sans); font-size:13px; color:#c7d0da; display:flex; align-items:center; gap:18px;">
+          <span>Signed in as owner</span>
+          <a href="#" onclick="return changePassphrase()" style="color:#c7d0da; border-bottom:1px solid #8b96a3;">Change passphrase</a>
+          <button class="btn small" style="border-color:#8b96a3; color:#fff;" onclick="exitDashboard()">Exit dashboard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-tabs">
+      <div class="wrap">
+        <button class="dash-tab active" data-tab="overview" onclick="dashTab('overview')">Overview</button>
+        <button class="dash-tab" data-tab="submissions" onclick="dashTab('submissions')">Submissions</button>
+        <button class="dash-tab" data-tab="volumes" onclick="dashTab('volumes')">Volumes</button>
+        <button class="dash-tab" data-tab="editor" onclick="dashTab('editor')">Research editor</button>
+        <button class="dash-tab" data-tab="people" onclick="dashTab('people')">Authors &amp; board</button>
+      </div>
+    </div>
+    <div id="dashSaveNote" style="display:none; background:var(--navy); color:#fff; font-family:var(--sans); font-size:12.5px; text-align:center; padding:8px;">Saved</div>
+
+    <!-- Overview -->
+    <div class="dash-panel active" id="dash-overview">
+      <div class="wrap">
+        <div class="dash-metrics" id="dashMetrics"></div>
+        <div class="side-panel" style="margin-bottom:32px;">
+          <h4>Homepage notice</h4>
+          <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">This is the message shown on the homepage before you've published your first volume.</p>
+          <textarea id="homeNoticeInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+          <div style="margin-top:12px;"><button class="btn small solid" onclick="saveHomeNotice()">Save notice</button></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+          <div>
+            <h3 style="font-size:18px; margin-bottom:18px;">Papers awaiting review</h3>
+            <div id="overviewReview"></div>
+          </div>
+          <div>
+            <h3 style="font-size:18px; margin-bottom:18px;">Scheduled publications</h3>
+            <div id="overviewScheduled"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submissions -->
+    <div class="dash-panel" id="dash-submissions">
+      <div class="wrap">
+        <div class="sec-head" style="margin-bottom:24px;">
+          <h2 style="font-size:24px;">Submissions workflow</h2>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <p class="desc" style="font-size:13px; margin:0;">Drag a card to move it to the next stage, or click it to open the full editor.</p>
+            <button class="btn small solid" onclick="toggleForm('quickAddForm')">+ New submission</button>
+          </div>
+        </div>
+        <div class="side-panel" id="quickAddForm" style="display:none; margin-bottom:32px;">
+          <h4>Log a new submission</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Title</label><input type="text" id="qaTitle" placeholder="Paper title" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Author &amp; affiliation</label><input type="text" id="qaAuthor" placeholder="Full name — affiliation" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Field</label><select id="qaField" style="width:100%; font-family:var(--sans); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></select></div>
+            <div style="display:flex; align-items:flex-end;"><button class="btn small solid" onclick="addSubmission()">Add to board</button></div>
+          </div>
+        </div>
+        <div class="board-cols" id="boardCols"></div>
+      </div>
+    </div>
+
+    <!-- Volumes -->
+    <div class="dash-panel" id="dash-volumes">
+      <div class="wrap">
+        <div class="sec-head" style="margin-bottom:24px;">
+          <h2 style="font-size:24px;">Volumes</h2>
+          <button class="btn small solid" onclick="toggleForm('volumeForm')">+ New volume</button>
+        </div>
+        <div class="side-panel" id="volumeForm" style="display:none; margin-bottom:32px;">
+          <h4>Create a volume</h4>
+          <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">This is your first issue — number it however you'd like to start (e.g. "I", "No. 1").</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 2fr 1fr; gap:16px;">
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Volume no.</label><input type="text" id="vNum" placeholder="I" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Issue</label><input type="text" id="vIssue" placeholder="No. 1" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Theme</label><input type="text" id="vTheme" placeholder="Editorial theme for this issue" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+            <div><label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Target date</label><input type="date" id="vDate" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></div>
+          </div>
+          <div style="margin-top:16px;"><button class="btn small solid" onclick="addVolume()">Create volume</button></div>
+        </div>
+        <table class="dash-table">
+          <thead><tr><th>Volume</th><th>Theme</th><th>Papers</th><th>Status</th><th>Target date</th><th></th></tr></thead>
+          <tbody id="dashVolumesTable"></tbody>
+        </table>
+        <div id="volumesEmpty" class="empty-state" style="display:none;">No volumes yet — create your first issue above, then assign papers to it from the Research editor.</div>
+      </div>
+    </div>
+
+    <!-- Research editor -->
+    <div class="dash-panel" id="dash-editor">
+      <div class="wrap">
+        <div class="sec-head" style="margin-bottom:24px;">
+          <h2 style="font-size:24px;">Research editor</h2>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <select id="edPaperSelect" onchange="loadPaperIntoEditor(this.value)" style="font-family:var(--sans); font-size:12.5px; padding:9px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></select>
+            <button class="btn small" onclick="newPaperInEditor()">+ New paper</button>
+          </div>
+        </div>
+        <div class="editor-shell">
+          <div class="editor-pane">
+            <label>Field</label>
+            <select id="edField"></select>
+            <label>Title</label>
+            <input type="text" id="edTitle" placeholder="Paper title">
+            <label>Author &amp; affiliation</label>
+            <input type="text" id="edAuthor" placeholder="Full name — affiliation">
+            <label>Abstract</label>
+            <div class="editor-toolbar">
+              <button title="Bold" onclick="wrapSelection('B')"><b>B</b></button>
+              <button title="Italic" onclick="wrapSelection('I')"><i>I</i></button>
+              <button title="Quote" onclick="wrapSelection('Q')">&#8221;</button>
+            </div>
+            <textarea rows="8" id="edAbstract" placeholder="Abstract"></textarea>
+            <label>Assign to volume</label>
+            <select id="edVolume"></select>
+            <label>Stage</label>
+            <select id="edStage"></select>
+            <div id="edManuscriptLink" style="display:none; margin-top:14px; font-family:var(--sans); font-size:12.5px;">
+              <span style="display:block; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-size:10.5px; margin-bottom:4px;">Uploaded manuscript</span>
+              <a id="edManuscriptA" href="#" target="_blank" rel="noopener" style="color:var(--navy); border-bottom:1px solid var(--gold);"></a>
+            </div>
+            <label style="margin-top:14px;">Attach / replace manuscript file</label>
+            <input type="file" id="edManuscriptFile" accept=".pdf,.doc,.docx" style="font-family:var(--sans); font-size:12.5px;">
+            <div id="edManuscriptStatus" style="display:none; margin-top:6px; font-family:var(--sans); font-size:12px;"></div>
+            <div style="display:flex; gap:10px; margin-top:24px; flex-wrap:wrap;">
+              <button class="btn small solid" onclick="savePaper()">Save</button>
+              <button class="btn small" onclick="publishPaper()">Mark as published</button>
+              <button class="btn small" style="border-color:#a32d2d; color:#a32d2d;" onclick="deleteCurrentPaper()">Delete</button>
+            </div>
+          </div>
+          <div class="preview-pane">
+            <span class="paper-field" id="prField">—</span>
+            <div class="paper-title" id="prTitle" style="font-size:24px;">Untitled paper</div>
+            <div class="paper-authors" id="prAuthor"></div>
+            <div class="paper-abstract" id="prAbstract" style="margin-top:16px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- People -->
+    <div class="dash-panel" id="dash-people">
+      <div class="wrap">
+        <div class="sec-head" style="margin-bottom:24px;">
+          <h2 style="font-size:24px;">Authors &amp; editorial board</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+          <div>
+            <h3 style="font-size:18px; margin-bottom:16px;">Authors</h3>
+            <div class="side-panel" style="margin-bottom:20px;">
+              <div style="display:grid; gap:10px;">
+                <input type="text" id="apName" placeholder="Name" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <input type="text" id="apAff" placeholder="Affiliation" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <input type="text" id="apFocus" placeholder="Area of focus" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <button class="btn small solid" id="apSaveBtn" onclick="addPerson('authors')">Add author</button>
+              </div>
+            </div>
+            <div id="dashAuthorsList"></div>
+          </div>
+          <div>
+            <h3 style="font-size:18px; margin-bottom:16px;">Editorial board</h3>
+            <div class="side-panel" style="margin-bottom:20px;">
+              <div style="display:grid; gap:10px;">
+                <input type="text" id="bpName" placeholder="Name" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <input type="text" id="bpRole" placeholder="Role (e.g. Editor-in-Chief)" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <input type="text" id="bpAff" placeholder="Location / affiliation" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <input type="text" id="bpFocus" placeholder="Area of focus" style="font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+                <button class="btn small solid" id="bpSaveBtn" onclick="addPerson('board')">Add board member</button>
+              </div>
+            </div>
+            <div id="dashBoardList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-word">The Civic <span class="review">Review</span></div>
+        <p class="footer-tagline">Independent research on the ideas, institutions, and economies shaping public life.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <a href="#" onclick="return navClick(event,'research')">Research</a>
+        <a href="#" onclick="return navClick(event,'volumes')">Volumes</a>
+        <a href="#" onclick="return navClick(event,'archive')">Archive</a>
+      </div>
+      <div>
+        <h4>About</h4>
+        <a href="#" onclick="return navClick(event,'authors')">Authors</a>
+        <a href="#" onclick="return navClick(event,'board')">Editorial Board</a>
+        <a href="#" onclick="return navClick(event,'about')">About the Review</a>
+      </div>
+      <div>
+        <h4>Contribute</h4>
+        <a href="#" onclick="return navClick(event,'submit')">Submit Research</a>
+        <a href="#" onclick="return navClick(event,'guidelines')">Editing Guidelines</a>
+        <a href="#" onclick="return navClick(event,'dashboard')">Editorial Dashboard</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>The Civic Review is published with contributors and reviewers across South Asia and internationally.</span>
+      <span>&copy; 2026 The Civic Review</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+/* ================= BACKEND CONFIG =================
+   1. Create a free project at https://supabase.com
+   2. In the SQL editor, run the query from setup.sql (included alongside this file)
+   3. Go to Project Settings > API and paste your values below
+*/
+const SUPABASE_URL = "https://gcnmiwcxyofaxttmobzv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Ku5LYfTsl4wxtQjtlw_leA_m-AYkMoF";
+
+/* ================= STORAGE SHIM =================
+   Everything below stands in for the old Claude-artifact `window.storage`
+   API, so the rest of the app (which calls window.storage.get/set) keeps
+   working unchanged, but now talks to a real Postgres database instead. */
+(function(){
+  if(SUPABASE_URL.startsWith("PASTE_") || SUPABASE_ANON_KEY.startsWith("PASTE_")){
+    console.warn("Supabase is not configured yet — edit SUPABASE_URL / SUPABASE_ANON_KEY at the top of the script. The site will run but nothing will save.");
+    return;
+  }
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  window._sbClient = client; // used directly for manuscript file uploads (Storage), separate from the kv shim below
+  window.storage = {
+    async get(key, shared){
+      const { data: row, error } = await client
+        .from('kv_store')
+        .select('value')
+        .eq('key', key)
+        .maybeSingle();
+      if(error) throw error;
+      if(!row) throw new Error('not found');
+      return { key, value: row.value, shared: !!shared };
+    },
+    async set(key, value, shared){
+      const { error } = await client
+        .from('kv_store')
+        .upsert({ key, value }, { onConflict: 'key' });
+      if(error) throw error;
+      return { key, value, shared: !!shared };
+    },
+    async delete(key, shared){
+      const { error } = await client.from('kv_store').delete().eq('key', key);
+      if(error) throw error;
+      return { key, deleted: true, shared: !!shared };
+    },
+    async list(prefix, shared){
+      let q = client.from('kv_store').select('key');
+      if(prefix) q = q.like('key', prefix + '%');
+      const { data: rows, error } = await q;
+      if(error) throw error;
+      return { keys: rows.map(r=>r.key), prefix, shared: !!shared };
+    }
+  };
+})();
+
+/* ================= STATIC TAXONOMY ================= */
+const FIELDS = [
+  {n:"01", name:"Economics", desc:"Markets, development, trade, and the political economy of growth."},
+  {n:"02", name:"Philosophy", desc:"Ethics, political theory, and the foundations of public reasoning."},
+  {n:"03", name:"Politics", desc:"Governance, elections, statecraft, and the exercise of power."},
+  {n:"04", name:"Public Policy", desc:"Design, implementation, and evaluation of public programs."},
+  {n:"05", name:"Education", desc:"Learning, pedagogy, and the institutions that transmit knowledge."},
+  {n:"06", name:"Technology & Society", desc:"How digital systems reshape institutions, work, and civic life."}
+];
+const INSIDE = [
+  {name:"Research", desc:"Peer-reviewed original papers with full methodology and citations."},
+  {name:"Articles", desc:"Shorter analytical pieces on current institutional and policy questions."},
+  {name:"Interviews", desc:"Conversations with scholars, policymakers, and practitioners."},
+  {name:"Perspectives", desc:"Argued opinion grounded in evidence, clearly labeled as such."}
+];
+const STAGES = ["Submission","Reviewing","Editing","Author Review","Approved","Scheduled","Published"];
+
+/* ================= PERSISTED DATA ================= */
+const STORAGE_KEY = 'civic-review-data';
+const STORAGE_AVAILABLE = (typeof window !== 'undefined' && !!window.storage);
+let data = { papers: [], volumes: [], authors: [], board: [], settings: { homeNotice: 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.' } };
+let currentPaperId = null;
+let editingAuthorId = null;
+let editingBoardId = null;
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+async function loadData(){
+  if(!STORAGE_AVAILABLE){ return; }
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if(res && res.value){ data = JSON.parse(res.value); }
+  }catch(e){
+    /* no saved data yet — start with the empty defaults */
+  }
+  if(!data.settings) data.settings = {};
+  if(!data.settings.homeNotice) data.settings.homeNotice = 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.';
+}
+async function saveData(){
+  if(!STORAGE_AVAILABLE) return;
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify(data), true);
+    flashSaved();
+  }catch(e){ console.error('Storage error', e); }
+}
+function flashSaved(){
+  const n = document.getElementById('dashSaveNote');
+  if(!n) return;
+  n.style.display='block';
+  clearTimeout(flashSaved._t);
+  flashSaved._t = setTimeout(()=>{ n.style.display='none'; }, 1400);
+}
+
+/* ================= NAV / ROUTING ================= */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('nav.primary a').forEach(a=>a.classList.toggle('active', a.dataset.page===page));
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function navClick(e,page){ e.preventDefault(); go(page); return false; }
+function toggleMobileNav(){
+  const nav = document.getElementById('primaryNav');
+  nav.style.display = (nav.style.display==='flex') ? 'none' : 'flex';
+  nav.style.cssText += 'flex-direction:column; position:absolute; top:88px; right:20px; background:var(--cream); border:1px solid var(--rule-strong); padding:16px 24px; gap:14px; z-index:60;';
+}
+function openSearch(){
+  go('archive');
+  setTimeout(()=>document.getElementById('archiveSearch').focus(), 50);
+}
+function toggleForm(id){
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display==='none') ? 'block' : 'none';
+}
+
+/* ================= HELPERS ================= */
+function publishedVolumes(){ return data.volumes.filter(v=>v.status==='published'); }
+function volumeById(id){ return data.volumes.find(v=>v.id===id); }
+function publicPapers(){
+  const pubVolIds = new Set(publishedVolumes().map(v=>v.id));
+  return data.papers.filter(p=>p.stage==='Published' && p.volumeId && pubVolIds.has(p.volumeId));
+}
+function fieldOptionsHtml(selected){
+  return FIELDS.map(f=>`<option value="${f.name}" ${f.name===selected?'selected':''}>${f.name}</option>`).join('');
+}
+
+/* ================= RENDER: HOME ================= */
+function renderFields(){
+  document.getElementById('fieldsList').innerHTML = FIELDS.map(f=>`
+    <div class="num-item">
+      <span class="num-num">${f.n}</span>
+      <h3>${f.name}</h3>
+      <p>${f.desc}</p>
+    </div>`).join('');
+}
+function renderInside(){
+  document.getElementById('insideGrid').innerHTML = INSIDE.map(i=>`
+    <div class="inside-item"><h3>${i.name}</h3><p>${i.desc}</p></div>`).join('');
+}
+function paperRow(p, idx){
+  const vol = volumeById(p.volumeId);
+  const volLabel = vol ? `Vol. ${vol.number}, ${vol.issue}` : '';
+  return `<div class="paper-row">
+    <div class="paper-idx">${String(idx+1).padStart(2,'0')}</div>
+    <div>
+      <div class="paper-field">${p.field}${volLabel ? ' &middot; '+volLabel : ''}</div>
+      <div class="paper-title">${p.title}</div>
+      <div class="paper-authors">${p.authors}</div>
+      <div class="paper-abstract">${p.abstract}</div>
+    </div>
+    <div class="paper-link">&nbsp;</div>
+  </div>`;
+}
+function renderHomePapers(){
+  const pub = publishedVolumes().sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  const latest = pub[0];
+  const heroLine = document.getElementById('heroVolumeLine');
+  if(latest){
+    heroLine.textContent = `Volume ${latest.number} — ${latest.issue} · ${formatDate(latest.date)}`;
+  } else {
+    heroLine.textContent = 'First issue in preparation';
+  }
+  const issueFrame = document.querySelector('#page-home .issue-frame');
+  if(!latest){
+    issueFrame.innerHTML = `<div class="empty-state">${data.settings.homeNotice}</div>`;
+    return;
+  }
+  const papers = publicPapers().filter(p=>p.volumeId===latest.id);
+  issueFrame.innerHTML = `
+    <div class="issue-head">
+      <h2>Volume ${latest.number}, ${latest.issue}</h2>
+      <span class="issue-meta">Published ${formatDate(latest.date)} &nbsp;·&nbsp; ${papers.length} paper${papers.length===1?'':'s'}</span>
+    </div>
+    ${latest.theme ? `<div class="issue-theme">${latest.theme}</div>` : '<div style="margin-bottom:24px;"></div>'}
+    ${papers.length ? papers.map((p,i)=>paperRow(p,i)).join('') : '<div class="empty-state">No papers published in this issue yet.</div>'}
+    <div style="margin-top:28px;"><button class="btn small" onclick="go('volumes')">View full volume</button></div>
+  `;
+}
+function formatDate(iso){
+  if(!iso) return 'date to be confirmed';
+  const d = new Date(iso+'T00:00:00');
+  if(isNaN(d)) return iso;
+  return d.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+}
+
+/* ================= RENDER: RESEARCH ================= */
+let researchFilter = "All";
+function renderResearchFilters(){
+  const fields = ["All", ...FIELDS.map(f=>f.name)];
+  document.getElementById('researchFilters').innerHTML = fields.map(f=>
+    `<button class="filter-tab ${f===researchFilter?'active':''}" onclick="setResearchFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
+  ).join('');
+}
+function setResearchFilter(f){ researchFilter=f; renderResearchFilters(); renderResearchList(); }
+function renderResearchList(){
+  const all = publicPapers();
+  const list = researchFilter==="All" ? all : all.filter(p=>p.field===researchFilter);
+  document.getElementById('researchList').innerHTML = list.length ? list.map((p,i)=>paperRow(p,i)).join('') :
+    `<div class="archive-empty">No published papers in this field yet.</div>`;
+}
+
+/* ================= RENDER: VOLUMES (public) ================= */
+function renderVolumes(){
+  const vols = publishedVolumes().sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+  if(!vols.length){
+    document.getElementById('volumesList').innerHTML = `<div class="empty-state">No volumes have been published yet. Create and publish your first issue from the Editorial Dashboard.</div>`;
+    return;
+  }
+  document.getElementById('volumesList').innerHTML = vols.map((v,i)=>{
+    const count = publicPapers().filter(p=>p.volumeId===v.id).length;
+    return `
+    <div class="volume-card">
+      <div class="volume-num">${v.number}<span style="font-size:16px; font-style:normal;">.${(v.issue||'').replace('No. ','')}</span></div>
+      <div>
+        <div class="volume-title">${v.theme || 'Untitled issue'} ${i===0?'<span class="tag-current">Current issue</span>':''}</div>
+        <div class="volume-sub">Volume ${v.number}, ${v.issue} &nbsp;·&nbsp; ${formatDate(v.date)} &nbsp;·&nbsp; ${count} paper${count===1?'':'s'}</div>
+      </div>
+      <button class="btn small" onclick="go('research')">Read issue</button>
+    </div>`;
+  }).join('');
+}
+
+/* ================= RENDER: ARCHIVE (public) ================= */
+function initArchiveFields(){
+  const sel = document.getElementById('archiveField');
+  sel.innerHTML = '<option value="">All fields</option>' + FIELDS.map(f=>`<option value="${f.name}">${f.name}</option>`).join('');
+}
+function renderArchive(){
+  const q = document.getElementById('archiveSearch').value.toLowerCase();
+  const field = document.getElementById('archiveField').value;
+  const list = publicPapers().filter(p=>
+    (!field || p.field===field) &&
+    (p.title.toLowerCase().includes(q) || p.authors.toLowerCase().includes(q))
+  );
+  document.getElementById('archiveList').innerHTML = list.length ? list.map(p=>{
+    const vol = volumeById(p.volumeId);
+    return `
+    <div class="archive-row">
+      <div class="archive-vol">${vol ? 'Vol. '+vol.number+'.'+ (vol.issue||'').replace('No. ','') : ''}</div>
+      <div class="archive-title">${p.title}</div>
+      <div class="archive-author">${p.authors}</div>
+    </div>`;
+  }).join('') : `<div class="archive-empty">${data.papers.length ? 'No papers match your search.' : 'The archive is empty — published papers will appear here.'}</div>`;
+}
+
+/* ================= RENDER: PEOPLE (public) ================= */
+function renderPeoplePublic(){
+  document.getElementById('authorsGrid').innerHTML = data.authors.length ? data.authors.map(p=>`
+    <div class="person">
+      <div class="person-name">${p.name}</div>
+      <div class="person-role">Contributing Author</div>
+      <div class="person-aff">${p.aff}</div>
+      <div class="person-focus">${p.focus}</div>
+    </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;">No authors listed yet. Add contributors from the Editorial Dashboard.</div>`;
+
+  document.getElementById('boardGrid').innerHTML = data.board.length ? data.board.map(p=>`
+    <div class="person">
+      <div class="person-name">${p.name}</div>
+      <div class="person-role">${p.role}</div>
+      <div class="person-aff">${p.aff}</div>
+      <div class="person-focus">${p.focus}</div>
+    </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;">No editorial board members listed yet. Add them from the Editorial Dashboard.</div>`;
+}
+
+/* ================= RENDER: ABOUT STATS ================= */
+function renderStats(){
+  document.getElementById('statVolumes').textContent = publishedVolumes().length;
+  document.getElementById('statPapers').textContent = publicPapers().length;
+  document.getElementById('statAuthors').textContent = data.authors.length;
+}
+
+/* ================= DASHBOARD: GATE ================= */
+let ownerHash = null;
+const OWNER_KEY = 'civic-review-owner-hash';
+
+async function sha256Hex(str){
+  if(window.crypto && window.crypto.subtle){
+    try{
+      const enc = new TextEncoder().encode(str);
+      const buf = await window.crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }catch(e){ /* fall through to fallback */ }
+  }
+  let h=0; for(let i=0;i<str.length;i++){ h=(h<<5)-h+str.charCodeAt(i); h|=0; }
+  return 'fb-'+h;
+}
+async function loadOwnerHash(){
+  if(!STORAGE_AVAILABLE){ ownerHash = null; return; }
+  try{
+    const res = await window.storage.get(OWNER_KEY, true);
+    ownerHash = res && res.value ? JSON.parse(res.value).hash : null;
+  }catch(e){ ownerHash = null; }
+}
+function renderGateState(){
+  document.getElementById('gateLoading').style.display='none';
+  document.getElementById('gateSetup').style.display = ownerHash ? 'none' : 'block';
+  document.getElementById('gateLogin').style.display = ownerHash ? 'block' : 'none';
+}
+async function setupOwnerPassphrase(){
+  const p1 = document.getElementById('setupPass').value;
+  const p2 = document.getElementById('setupPassConfirm').value;
+  const err = document.getElementById('setupError');
+  err.style.display='none';
+  if(!p1 || p1.length<4){ err.textContent='Passphrase must be at least 4 characters.'; err.style.display='block'; return; }
+  if(p1!==p2){ err.textContent='Passphrases do not match.'; err.style.display='block'; return; }
+  ownerHash = await sha256Hex(p1);
+  if(STORAGE_AVAILABLE){ try{ await window.storage.set(OWNER_KEY, JSON.stringify({hash:ownerHash}), true); }catch(e){} }
+  document.getElementById('setupPass').value=''; document.getElementById('setupPassConfirm').value='';
+  enterDashboard();
+}
+async function attemptLogin(){
+  const p = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  err.style.display='none';
+  const hash = await sha256Hex(p);
+  if(hash===ownerHash){
+    document.getElementById('loginPass').value='';
+    enterDashboard();
+  } else {
+    err.textContent='Incorrect passphrase.';
+    err.style.display='block';
+  }
+}
+async function changePassphrase(){
+  const cur = prompt('Enter your current passphrase to confirm:');
+  if(cur===null) return false;
+  const curHash = await sha256Hex(cur);
+  if(curHash!==ownerHash){ alert('That passphrase is incorrect.'); return false; }
+  const next = prompt('Enter a new passphrase (at least 4 characters):');
+  if(next===null) return false;
+  if(!next || next.length<4){ alert('Passphrase must be at least 4 characters. Nothing was changed.'); return false; }
+  const confirmNext = prompt('Confirm the new passphrase:');
+  if(next!==confirmNext){ alert('Passphrases did not match. Nothing was changed.'); return false; }
+  ownerHash = await sha256Hex(next);
+  if(STORAGE_AVAILABLE){ try{ await window.storage.set(OWNER_KEY, JSON.stringify({hash:ownerHash}), true); }catch(e){} }
+  alert('Passphrase updated.');
+  return false;
+}
+function enterDashboard(){
+  document.getElementById('dashGate').style.display='none';
+  document.getElementById('dashShell').classList.add('active');
+  renderDashAll();
+}
+function exitDashboard(){
+  document.getElementById('dashShell').classList.remove('active');
+  document.getElementById('dashGate').style.display='block';
+  renderGateState();
+}
+function dashTab(tab){
+  document.querySelectorAll('.dash-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.querySelectorAll('.dash-panel').forEach(p=>p.classList.toggle('active', p.id==='dash-'+tab));
+}
+function renderDashAll(){
+  renderDashOverview();
+  renderBoard();
+  renderDashVolumes();
+  renderEditorSelectors();
+  renderDashPeople();
+  document.getElementById('qaField').innerHTML = fieldOptionsHtml();
+}
+
+/* ================= DASHBOARD: OVERVIEW ================= */
+function saveHomeNotice(){
+  data.settings.homeNotice = document.getElementById('homeNoticeInput').value.trim() || data.settings.homeNotice;
+  saveData(); renderAllPublic();
+}
+function renderDashOverview(){
+  document.getElementById('homeNoticeInput').value = data.settings.homeNotice;
+  const counts = {}; STAGES.forEach(s=>counts[s]=0);
+  data.papers.forEach(p=>{ counts[p.stage] = (counts[p.stage]||0)+1; });
+  const nextVol = data.volumes.find(v=>v.status!=='published');
+  document.getElementById('dashMetrics').innerHTML = `
+    <div class="dash-metric"><div class="num">${nextVol ? nextVol.number+', '+nextVol.issue : '—'}</div><div class="lbl">Next volume in preparation</div></div>
+    <div class="dash-metric"><div class="num">${counts['Submission']+counts['Reviewing']}</div><div class="lbl">Awaiting review</div></div>
+    <div class="dash-metric"><div class="num">${counts['Editing']+counts['Author Review']}</div><div class="lbl">In editing</div></div>
+    <div class="dash-metric"><div class="num">${counts['Published']}</div><div class="lbl">Published papers total</div></div>
+  `;
+  const review = data.papers.filter(s=>s.stage==='Submission'||s.stage==='Reviewing');
+  document.getElementById('overviewReview').innerHTML = review.length ? review.map(s=>`
+    <div style="padding:14px 0; border-top:1px solid var(--rule);">
+      <div style="font-family:var(--serif-body); font-size:14.5px; color:var(--navy-3);">${s.title}</div>
+      <div style="font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); margin-top:4px;">${s.authors} &nbsp;·&nbsp; ${s.field}</div>
+    </div>`).join('') : `<div class="empty-state">Nothing awaiting review.</div>`;
+  const scheduled = data.papers.filter(s=>s.stage==='Scheduled');
+  document.getElementById('overviewScheduled').innerHTML = scheduled.length ? scheduled.map(s=>`
+    <div style="padding:14px 0; border-top:1px solid var(--rule);">
+      <div style="font-family:var(--serif-body); font-size:14.5px; color:var(--navy-3);">${s.title}</div>
+      <div style="font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); margin-top:4px;">${s.authors}</div>
+    </div>`).join('') : `<div class="empty-state">Nothing scheduled yet.</div>`;
+}
+
+/* ================= PUBLIC SUBMISSION FORM ================= */
+function initPublicFieldSelect(){
+  const sel = document.getElementById('pubField');
+  if(sel) sel.innerHTML = fieldOptionsHtml();
+}
+async function submitPublicPaper(){
+  const btn = document.getElementById('pubSubmitBtn');
+  const status = document.getElementById('pubSubmitStatus');
+  const title = document.getElementById('pubTitle').value.trim();
+  const authors = document.getElementById('pubAuthor').value.trim();
+  const field = document.getElementById('pubField').value;
+  const abstract = document.getElementById('pubAbstract').value.trim();
+  const fileInput = document.getElementById('pubFile');
+  const file = fileInput.files[0];
+
+  status.style.display = 'none';
+  if(!title || !authors || !file){
+    status.style.color = '#a32d2d';
+    status.textContent = 'Please add a title, an author, and attach your manuscript file.';
+    status.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Submitting…';
+  try{
+    let manuscriptUrl = null, manuscriptName = null;
+    if(window._sbClient){
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+      const path = `${Date.now()}_${safeName}`;
+      const { error: upErr } = await window._sbClient.storage.from('manuscripts').upload(path, file);
+      if(upErr) throw upErr;
+      const { data: pub } = window._sbClient.storage.from('manuscripts').getPublicUrl(path);
+      manuscriptUrl = pub.publicUrl;
+      manuscriptName = file.name;
+    }
+    data.papers.push({ id: uid(), title, authors, field, abstract, volumeId:null, stage:'Submission', manuscriptUrl, manuscriptName });
+    await saveData();
+
+    document.getElementById('pubTitle').value = '';
+    document.getElementById('pubAuthor').value = '';
+    document.getElementById('pubAbstract').value = '';
+    fileInput.value = '';
+    status.style.color = 'var(--navy)';
+    status.textContent = 'Submission received — thank you. Our editorial team will be in touch.';
+    status.style.display = 'block';
+  }catch(e){
+    console.error('Submission error', e);
+    status.style.color = '#a32d2d';
+    status.textContent = 'Something went wrong sending your manuscript. Please try again in a moment.';
+    status.style.display = 'block';
+  }finally{
+    btn.disabled = false; btn.textContent = 'Submit manuscript';
+  }
+}
+
+/* ================= DASHBOARD: SUBMISSIONS BOARD ================= */
+function addSubmission(){
+  const title = document.getElementById('qaTitle').value.trim();
+  const authors = document.getElementById('qaAuthor').value.trim();
+  const field = document.getElementById('qaField').value;
+  if(!title || !authors){ alert('Add a title and an author before saving.'); return; }
+  data.papers.push({ id: uid(), title, authors, field, abstract:'', volumeId:null, stage:'Submission' });
+  document.getElementById('qaTitle').value=''; document.getElementById('qaAuthor').value='';
+  toggleForm('quickAddForm');
+  saveData(); renderDashAll(); renderAllPublic();
+}
+function renderBoard(){
+  const cols = document.getElementById('boardCols');
+  cols.innerHTML = STAGES.map(stage=>`
+    <div>
+      <div class="board-col-head">${stage}</div>
+      <div class="board-col" data-stage="${stage}" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)"></div>
+    </div>`).join('');
+  STAGES.forEach(stage=>{
+    const col = cols.querySelector(`.board-col[data-stage="${stage}"]`);
+    const items = data.papers.filter(s=>s.stage===stage);
+    if(!items.length){
+      const empty = document.createElement('div');
+      empty.style.cssText='font-family:var(--sans); font-size:11.5px; color:var(--ink-soft); font-style:italic; padding:10px 6px;';
+      empty.textContent='No papers here.';
+      col.appendChild(empty);
+    }
+    items.forEach(s=>{
+      const card = document.createElement('div');
+      card.className='board-card'; card.draggable=true;
+      card.dataset.id=s.id;
+      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? '<div style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px;">&#128206; manuscript attached</div>' : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>`;
+      card.querySelector('.board-card-delete').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        if(!confirm(`Delete "${s.title || 'this submission'}" permanently?`)) return;
+        data.papers = data.papers.filter(p=>p.id!==s.id);
+        if(currentPaperId===s.id) currentPaperId = null;
+        saveData(); renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
+      });
+      card.addEventListener('click', ()=>{ dashTab('editor'); loadPaperIntoEditor(s.id); document.getElementById('edPaperSelect').value=s.id; });
+      card.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', s.id); card.classList.add('dragging'); });
+      card.addEventListener('dragend', ()=>card.classList.remove('dragging'));
+      col.appendChild(card);
+    });
+  });
+}
+function onDragOver(e){ e.preventDefault(); e.currentTarget.classList.add('dragover'); }
+function onDragLeave(e){ e.currentTarget.classList.remove('dragover'); }
+function onDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('dragover');
+  const id = e.dataTransfer.getData('text/plain');
+  const newStage = e.currentTarget.dataset.stage;
+  const paper = data.papers.find(s=>s.id===id);
+  if(paper){
+    paper.stage = newStage;
+    saveData(); renderBoard(); renderDashOverview(); renderEditorSelectors(); renderAllPublic();
+  }
+}
+
+/* ================= DASHBOARD: VOLUMES ================= */
+function addVolume(){
+  const number = document.getElementById('vNum').value.trim();
+  const issue = document.getElementById('vIssue').value.trim();
+  const theme = document.getElementById('vTheme').value.trim();
+  const dateVal = document.getElementById('vDate').value;
+  if(!number || !issue){ alert('Give the volume a number and an issue label.'); return; }
+  data.volumes.push({ id: uid(), number, issue, theme, date: dateVal, status:'draft' });
+  ['vNum','vIssue','vTheme','vDate'].forEach(id=>document.getElementById(id).value='');
+  toggleForm('volumeForm');
+  saveData(); renderDashVolumes(); renderEditorSelectors(); renderAllPublic();
+}
+function renderDashVolumes(){
+  const body = document.getElementById('dashVolumesTable');
+  const empty = document.getElementById('volumesEmpty');
+  if(!data.volumes.length){ body.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  body.innerHTML = data.volumes.map(v=>{
+    const count = data.papers.filter(p=>p.volumeId===v.id).length;
+    const publishedCount = data.papers.filter(p=>p.volumeId===v.id && p.stage==='Published').length;
+    return `
+    <tr>
+      <td style="font-family:var(--serif-display); font-style:italic;">Vol. ${v.number}, ${v.issue}</td>
+      <td>${v.theme || '<span style="color:var(--ink-soft); font-style:italic;">untitled</span>'}</td>
+      <td>${count}</td>
+      <td><span class="status-pill ${v.status}">${v.status}</span></td>
+      <td>${v.date ? formatDate(v.date) : '—'}</td>
+      <td style="white-space:nowrap;">
+        ${v.status!=='published' ? `<button class="btn small solid" ${publishedCount? '' : 'title="Mark at least one assigned paper as Published first"'} onclick="publishVolume('${v.id}')">Publish</button>` : `<button class="btn small" onclick="unpublishVolume('${v.id}')">Unpublish</button>`}
+        <button class="btn small" style="border-color:#a32d2d; color:#a32d2d;" onclick="deleteVolume('${v.id}')">Delete</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+function publishVolume(id){
+  const v = volumeById(id);
+  const publishedCount = data.papers.filter(p=>p.volumeId===id && p.stage==='Published').length;
+  if(!publishedCount){ alert('This volume has no papers marked as Published yet. Mark at least one paper as published in the Research editor first.'); return; }
+  v.status = 'published';
+  saveData(); renderDashVolumes(); renderDashOverview(); renderAllPublic();
+}
+function unpublishVolume(id){
+  volumeById(id).status = 'draft';
+  saveData(); renderDashVolumes(); renderAllPublic();
+}
+function deleteVolume(id){
+  if(!confirm('Delete this volume? Papers assigned to it will be unassigned, not deleted.')) return;
+  data.papers.forEach(p=>{ if(p.volumeId===id) p.volumeId=null; });
+  data.volumes = data.volumes.filter(v=>v.id!==id);
+  saveData(); renderDashVolumes(); renderEditorSelectors(); renderAllPublic();
+}
+
+/* ================= DASHBOARD: RESEARCH EDITOR ================= */
+function renderEditorSelectors(){
+  const sel = document.getElementById('edPaperSelect');
+  sel.innerHTML = '<option value="">— select a paper —</option>' + data.papers.map(p=>`<option value="${p.id}">${p.title || 'Untitled paper'}</option>`).join('');
+  document.getElementById('edField').innerHTML = fieldOptionsHtml();
+  document.getElementById('edVolume').innerHTML = '<option value="">No volume assigned</option>' + data.volumes.map(v=>`<option value="${v.id}">Vol. ${v.number}, ${v.issue}${v.theme?' — '+v.theme:''}</option>`).join('');
+  document.getElementById('edStage').innerHTML = STAGES.map(s=>`<option value="${s}">${s}</option>`).join('');
+  if(currentPaperId && !data.papers.find(p=>p.id===currentPaperId)) currentPaperId=null;
+  if(currentPaperId){ sel.value = currentPaperId; loadPaperIntoEditor(currentPaperId, true); }
+  else { newPaperInEditor(true); }
+}
+function newPaperInEditor(silent){
+  currentPaperId = null;
+  document.getElementById('edPaperSelect').value = '';
+  document.getElementById('edField').value = FIELDS[0].name;
+  document.getElementById('edTitle').value = '';
+  document.getElementById('edAuthor').value = '';
+  document.getElementById('edAbstract').value = '';
+  document.getElementById('edVolume').value = '';
+  document.getElementById('edStage').value = 'Submission';
+  document.getElementById('edManuscriptLink').style.display = 'none';
+  document.getElementById('edManuscriptFile').value = '';
+  document.getElementById('edManuscriptStatus').style.display = 'none';
+  syncPreview();
+}
+function loadPaperIntoEditor(id, silent){
+  if(!id){ newPaperInEditor(); return; }
+  const p = data.papers.find(x=>x.id===id);
+  if(!p) return;
+  currentPaperId = id;
+  document.getElementById('edField').value = p.field;
+  document.getElementById('edTitle').value = p.title;
+  document.getElementById('edAuthor').value = p.authors;
+  document.getElementById('edAbstract').value = p.abstract || '';
+  document.getElementById('edVolume').value = p.volumeId || '';
+  document.getElementById('edStage').value = p.stage;
+  const link = document.getElementById('edManuscriptLink');
+  const a = document.getElementById('edManuscriptA');
+  if(p.manuscriptUrl){
+    a.href = p.manuscriptUrl;
+    a.textContent = p.manuscriptName || 'Download manuscript';
+    link.style.display = 'block';
+  } else {
+    link.style.display = 'none';
+  }
+  document.getElementById('edManuscriptFile').value = '';
+  document.getElementById('edManuscriptStatus').style.display = 'none';
+  syncPreview();
+}
+function collectEditorFields(){
+  return {
+    field: document.getElementById('edField').value,
+    title: document.getElementById('edTitle').value.trim(),
+    authors: document.getElementById('edAuthor').value.trim(),
+    abstract: document.getElementById('edAbstract').value.trim(),
+    volumeId: document.getElementById('edVolume').value || null,
+    stage: document.getElementById('edStage').value
+  };
+}
+async function savePaper(){
+  const f = collectEditorFields();
+  if(!f.title || !f.authors){ alert('A title and an author are required.'); return; }
+
+  const fileInput = document.getElementById('edManuscriptFile');
+  const status = document.getElementById('edManuscriptStatus');
+  const file = fileInput.files[0];
+  if(file){
+    status.style.display = 'block';
+    status.style.color = 'var(--ink-soft)';
+    status.textContent = 'Uploading manuscript…';
+    try{
+      if(window._sbClient){
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+        const path = `${Date.now()}_${safeName}`;
+        const { error: upErr } = await window._sbClient.storage.from('manuscripts').upload(path, file);
+        if(upErr) throw upErr;
+        const { data: pub } = window._sbClient.storage.from('manuscripts').getPublicUrl(path);
+        f.manuscriptUrl = pub.publicUrl;
+        f.manuscriptName = file.name;
+      }
+      status.style.color = 'var(--navy)';
+      status.textContent = 'Manuscript uploaded.';
+    }catch(e){
+      console.error('Manuscript upload error', e);
+      status.style.color = '#a32d2d';
+      status.textContent = 'Manuscript upload failed — paper will still save without it.';
+    }
+  }
+
+  if(currentPaperId){
+    Object.assign(data.papers.find(p=>p.id===currentPaperId), f);
+  } else {
+    const p = { id: uid(), ...f };
+    data.papers.push(p);
+    currentPaperId = p.id;
+  }
+  await saveData();
+  fileInput.value = '';
+  renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
+}
+async function publishPaper(){
+  const f = collectEditorFields();
+  if(!f.title || !f.authors || !f.abstract){ alert('Add a title, author, and abstract before publishing.'); return; }
+  if(!f.volumeId){ alert('Assign this paper to a volume before publishing it.'); return; }
+  document.getElementById('edStage').value = 'Published';
+  await savePaper();
+  alert('Paper marked as published. Publish its volume from the Volumes tab to make it visible on the site.');
+}
+function deleteCurrentPaper(){
+  if(!currentPaperId){ newPaperInEditor(); return; }
+  if(!confirm('Delete this paper permanently?')) return;
+  data.papers = data.papers.filter(p=>p.id!==currentPaperId);
+  currentPaperId = null;
+  saveData(); renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
+}
+function wrapSelection(type){
+  const ta = document.getElementById('edAbstract');
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const sel = ta.value.substring(start,end) || 'text';
+  const marks = {B:['**','**'], I:['_','_'], Q:['"','"']};
+  const [pre,post] = marks[type];
+  ta.value = ta.value.substring(0,start) + pre + sel + post + ta.value.substring(end);
+  syncPreview();
+}
+function syncPreview(){
+  document.getElementById('prField').textContent = (document.getElementById('edField').value || '—').toUpperCase();
+  document.getElementById('prTitle').textContent = document.getElementById('edTitle').value || 'Untitled paper';
+  document.getElementById('prAuthor').textContent = document.getElementById('edAuthor').value;
+  document.getElementById('prAbstract').textContent = document.getElementById('edAbstract').value;
+}
+['edField','edTitle','edAuthor','edAbstract'].forEach(id=>{
+  document.addEventListener('input', e=>{ if(e.target && e.target.id===id) syncPreview(); });
+});
+
+/* ================= DASHBOARD: PEOPLE ================= */
+function addPerson(kind){
+  if(kind==='authors'){
+    const name = document.getElementById('apName').value.trim();
+    const aff = document.getElementById('apAff').value.trim();
+    const focus = document.getElementById('apFocus').value.trim();
+    if(!name){ alert('Add a name.'); return; }
+    if(editingAuthorId){
+      const p = data.authors.find(x=>x.id===editingAuthorId);
+      if(p){ p.name=name; p.aff=aff; p.focus=focus; }
+      editingAuthorId = null;
+      document.getElementById('apSaveBtn').textContent = 'Add author';
+    } else {
+      data.authors.push({ id: uid(), name, aff, focus });
+    }
+    ['apName','apAff','apFocus'].forEach(id=>document.getElementById(id).value='');
+  } else {
+    const name = document.getElementById('bpName').value.trim();
+    const role = document.getElementById('bpRole').value.trim();
+    const aff = document.getElementById('bpAff').value.trim();
+    const focus = document.getElementById('bpFocus').value.trim();
+    if(!name){ alert('Add a name.'); return; }
+    if(editingBoardId){
+      const p = data.board.find(x=>x.id===editingBoardId);
+      if(p){ p.name=name; p.role=role; p.aff=aff; p.focus=focus; }
+      editingBoardId = null;
+      document.getElementById('bpSaveBtn').textContent = 'Add board member';
+    } else {
+      data.board.push({ id: uid(), name, role, aff, focus });
+    }
+    ['bpName','bpRole','bpAff','bpFocus'].forEach(id=>document.getElementById(id).value='');
+  }
+  saveData(); renderDashPeople(); renderPeoplePublic(); renderStats();
+}
+function startEditPerson(kind, id){
+  const p = data[kind].find(x=>x.id===id);
+  if(!p) return;
+  if(kind==='authors'){
+    document.getElementById('apName').value = p.name||'';
+    document.getElementById('apAff').value = p.aff||'';
+    document.getElementById('apFocus').value = p.focus||'';
+    editingAuthorId = id;
+    document.getElementById('apSaveBtn').textContent = 'Update author';
+  } else {
+    document.getElementById('bpName').value = p.name||'';
+    document.getElementById('bpRole').value = p.role||'';
+    document.getElementById('bpAff').value = p.aff||'';
+    document.getElementById('bpFocus').value = p.focus||'';
+    editingBoardId = id;
+    document.getElementById('bpSaveBtn').textContent = 'Update board member';
+  }
+  document.getElementById(kind==='authors' ? 'apName' : 'bpName').scrollIntoView({behavior:'smooth', block:'center'});
+}
+function removePerson(kind, id){
+  data[kind] = data[kind].filter(p=>p.id!==id);
+  if(kind==='authors' && editingAuthorId===id){ editingAuthorId=null; document.getElementById('apSaveBtn').textContent='Add author'; }
+  if(kind==='board' && editingBoardId===id){ editingBoardId=null; document.getElementById('bpSaveBtn').textContent='Add board member'; }
+  saveData(); renderDashPeople(); renderPeoplePublic(); renderStats();
+}
+function renderDashPeople(){
+  document.getElementById('dashAuthorsList').innerHTML = data.authors.length ? data.authors.map(p=>`
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--rule);">
+      <div>
+        <div style="font-family:var(--serif-body); font-size:14.5px; color:var(--navy-3);">${p.name}</div>
+        <div style="font-family:var(--sans); font-size:11.5px; color:var(--ink-soft);">${p.aff}${p.focus ? ' &middot; '+p.focus : ''}</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn small" onclick="startEditPerson('authors','${p.id}')">Edit</button>
+        <button class="btn small" style="border-color:#a32d2d; color:#a32d2d;" onclick="removePerson('authors','${p.id}')">Remove</button>
+      </div>
+    </div>`).join('') : `<div class="empty-state">No authors yet.</div>`;
+
+  document.getElementById('dashBoardList').innerHTML = data.board.length ? data.board.map(p=>`
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--rule);">
+      <div>
+        <div style="font-family:var(--serif-body); font-size:14.5px; color:var(--navy-3);">${p.name} — <span style="font-style:italic;">${p.role}</span></div>
+        <div style="font-family:var(--sans); font-size:11.5px; color:var(--ink-soft);">${p.aff}${p.focus ? ' &middot; '+p.focus : ''}</div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn small" onclick="startEditPerson('board','${p.id}')">Edit</button>
+        <button class="btn small" style="border-color:#a32d2d; color:#a32d2d;" onclick="removePerson('board','${p.id}')">Remove</button>
+      </div>
+    </div>`).join('') : `<div class="empty-state">No board members yet.</div>`;
+}
+
+/* ================= FULL PUBLIC RE-RENDER ================= */
+function renderAllPublic(){
+  renderHomePapers();
+  renderResearchList();
+  renderVolumes();
+  renderArchive();
+  renderPeoplePublic();
+  renderStats();
+}
+
+/* ================= INIT ================= */
+async function init(){
+  renderFields();
+  renderInside();
+  renderResearchFilters();
+  initArchiveFields();
+  initPublicFieldSelect();
+  await loadData();
+  renderAllPublic();
+  await loadOwnerHash();
+  renderGateState();
+}
+init();
+
+</script>
+</body>
+</html>
