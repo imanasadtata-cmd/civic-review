@@ -789,6 +789,12 @@
     <div class="dash-panel active" id="dash-overview">
       <div class="wrap">
         <div class="dash-metrics" id="dashMetrics"></div>
+        <div class="side-panel" style="margin-bottom:32px;">
+          <h4>Homepage notice</h4>
+          <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">This is the message shown on the homepage before you've published your first volume.</p>
+          <textarea id="homeNoticeInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+          <div style="margin-top:12px;"><button class="btn small solid" onclick="saveHomeNotice()">Save notice</button></div>
+        </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
           <div>
             <h3 style="font-size:18px; margin-bottom:18px;">Papers awaiting review</h3>
@@ -884,6 +890,9 @@
               <span style="display:block; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-size:10.5px; margin-bottom:4px;">Uploaded manuscript</span>
               <a id="edManuscriptA" href="#" target="_blank" rel="noopener" style="color:var(--navy); border-bottom:1px solid var(--gold);"></a>
             </div>
+            <label style="margin-top:14px;">Attach / replace manuscript file</label>
+            <input type="file" id="edManuscriptFile" accept=".pdf,.doc,.docx" style="font-family:var(--sans); font-size:12.5px;">
+            <div id="edManuscriptStatus" style="display:none; margin-top:6px; font-family:var(--sans); font-size:12px;"></div>
             <div style="display:flex; gap:10px; margin-top:24px; flex-wrap:wrap;">
               <button class="btn small solid" onclick="savePaper()">Save</button>
               <button class="btn small" onclick="publishPaper()">Mark as published</button>
@@ -1046,7 +1055,7 @@ const STAGES = ["Submission","Reviewing","Editing","Author Review","Approved","S
 /* ================= PERSISTED DATA ================= */
 const STORAGE_KEY = 'civic-review-data';
 const STORAGE_AVAILABLE = (typeof window !== 'undefined' && !!window.storage);
-let data = { papers: [], volumes: [], authors: [], board: [] };
+let data = { papers: [], volumes: [], authors: [], board: [], settings: { homeNotice: 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.' } };
 let currentPaperId = null;
 let editingAuthorId = null;
 let editingBoardId = null;
@@ -1061,6 +1070,8 @@ async function loadData(){
   }catch(e){
     /* no saved data yet — start with the empty defaults */
   }
+  if(!data.settings) data.settings = {};
+  if(!data.settings.homeNotice) data.settings.homeNotice = 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.';
 }
 async function saveData(){
   if(!STORAGE_AVAILABLE) return;
@@ -1148,7 +1159,7 @@ function renderHomePapers(){
   }
   const issueFrame = document.querySelector('#page-home .issue-frame');
   if(!latest){
-    issueFrame.innerHTML = `<div class="empty-state">The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.</div>`;
+    issueFrame.innerHTML = `<div class="empty-state">${data.settings.homeNotice}</div>`;
     return;
   }
   const papers = publicPapers().filter(p=>p.volumeId===latest.id);
@@ -1346,7 +1357,12 @@ function renderDashAll(){
 }
 
 /* ================= DASHBOARD: OVERVIEW ================= */
+function saveHomeNotice(){
+  data.settings.homeNotice = document.getElementById('homeNoticeInput').value.trim() || data.settings.homeNotice;
+  saveData(); renderAllPublic();
+}
 function renderDashOverview(){
+  document.getElementById('homeNoticeInput').value = data.settings.homeNotice;
   const counts = {}; STAGES.forEach(s=>counts[s]=0);
   data.papers.forEach(p=>{ counts[p.stage] = (counts[p.stage]||0)+1; });
   const nextVol = data.volumes.find(v=>v.status!=='published');
@@ -1456,7 +1472,14 @@ function renderBoard(){
       const card = document.createElement('div');
       card.className='board-card'; card.draggable=true;
       card.dataset.id=s.id;
-      card.innerHTML = `<div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? '<div style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px;">&#128206; manuscript attached</div>' : ''}`;
+      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? '<div style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px;">&#128206; manuscript attached</div>' : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>`;
+      card.querySelector('.board-card-delete').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        if(!confirm(`Delete "${s.title || 'this submission'}" permanently?`)) return;
+        data.papers = data.papers.filter(p=>p.id!==s.id);
+        if(currentPaperId===s.id) currentPaperId = null;
+        saveData(); renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
+      });
       card.addEventListener('click', ()=>{ dashTab('editor'); loadPaperIntoEditor(s.id); document.getElementById('edPaperSelect').value=s.id; });
       card.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', s.id); card.classList.add('dragging'); });
       card.addEventListener('dragend', ()=>card.classList.remove('dragging'));
@@ -1551,6 +1574,8 @@ function newPaperInEditor(silent){
   document.getElementById('edVolume').value = '';
   document.getElementById('edStage').value = 'Submission';
   document.getElementById('edManuscriptLink').style.display = 'none';
+  document.getElementById('edManuscriptFile').value = '';
+  document.getElementById('edManuscriptStatus').style.display = 'none';
   syncPreview();
 }
 function loadPaperIntoEditor(id, silent){
@@ -1573,6 +1598,8 @@ function loadPaperIntoEditor(id, silent){
   } else {
     link.style.display = 'none';
   }
+  document.getElementById('edManuscriptFile').value = '';
+  document.getElementById('edManuscriptStatus').style.display = 'none';
   syncPreview();
 }
 function collectEditorFields(){
@@ -1585,9 +1612,36 @@ function collectEditorFields(){
     stage: document.getElementById('edStage').value
   };
 }
-function savePaper(){
+async function savePaper(){
   const f = collectEditorFields();
   if(!f.title || !f.authors){ alert('A title and an author are required.'); return; }
+
+  const fileInput = document.getElementById('edManuscriptFile');
+  const status = document.getElementById('edManuscriptStatus');
+  const file = fileInput.files[0];
+  if(file){
+    status.style.display = 'block';
+    status.style.color = 'var(--ink-soft)';
+    status.textContent = 'Uploading manuscript…';
+    try{
+      if(window._sbClient){
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+        const path = `${Date.now()}_${safeName}`;
+        const { error: upErr } = await window._sbClient.storage.from('manuscripts').upload(path, file);
+        if(upErr) throw upErr;
+        const { data: pub } = window._sbClient.storage.from('manuscripts').getPublicUrl(path);
+        f.manuscriptUrl = pub.publicUrl;
+        f.manuscriptName = file.name;
+      }
+      status.style.color = 'var(--navy)';
+      status.textContent = 'Manuscript uploaded.';
+    }catch(e){
+      console.error('Manuscript upload error', e);
+      status.style.color = '#a32d2d';
+      status.textContent = 'Manuscript upload failed — paper will still save without it.';
+    }
+  }
+
   if(currentPaperId){
     Object.assign(data.papers.find(p=>p.id===currentPaperId), f);
   } else {
@@ -1595,14 +1649,16 @@ function savePaper(){
     data.papers.push(p);
     currentPaperId = p.id;
   }
-  saveData(); renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
+  await saveData();
+  fileInput.value = '';
+  renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
 }
-function publishPaper(){
+async function publishPaper(){
   const f = collectEditorFields();
   if(!f.title || !f.authors || !f.abstract){ alert('Add a title, author, and abstract before publishing.'); return; }
   if(!f.volumeId){ alert('Assign this paper to a volume before publishing it.'); return; }
   document.getElementById('edStage').value = 'Published';
-  savePaper();
+  await savePaper();
   alert('Paper marked as published. Publish its volume from the Volumes tab to make it visible on the site.');
 }
 function deleteCurrentPaper(){
