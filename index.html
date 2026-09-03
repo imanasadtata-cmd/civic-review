@@ -417,8 +417,8 @@
       </div>
       <div class="hero-grid">
         <div>
-          <h1>Independent research on the ideas, <em>institutions</em>, and economies shaping public life.</h1>
-          <p class="hero-dek">The Civic Review is an interdisciplinary journal publishing rigorous, accessible research across economics, philosophy, politics, public policy, education, and technology &amp; society — read internationally.</p>
+          <h1 id="homeHeroHeadline">Independent research on the ideas, <em>institutions</em>, and economies shaping public life.</h1>
+          <p class="hero-dek" id="homeHeroDek">The Civic Review is an interdisciplinary journal publishing rigorous, accessible research across economics, philosophy, politics, public policy, education, and technology &amp; society — read internationally.</p>
           <div style="margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;">
             <button class="btn solid" onclick="go('volumes')">Read the current volume</button>
             <button class="btn" onclick="go('submit')">Submit research</button>
@@ -426,7 +426,7 @@
         </div>
         <div class="hero-side">
           <span class="eyebrow navy">About the Review</span>
-          <p style="margin-top:14px;">A peer-reviewed, editorially independent publication with contributors and reviewers across South Asia, Europe, and North America. Published on a bi-weekly cadence.</p>
+          <p style="margin-top:14px;" id="homeAboutBlurb">A peer-reviewed, editorially independent publication with contributors and reviewers across South Asia, Europe, and North America. Published on a bi-weekly cadence.</p>
           <p><a href="#" onclick="return navClick(event,'about')" style="border-bottom:1px solid var(--gold); color:var(--navy);">Read our editorial philosophy →</a></p>
         </div>
       </div>
@@ -438,9 +438,9 @@
       <div class="sec-head">
         <div>
           <span class="eyebrow">— What We Publish</span>
-          <h2 style="margin-top:10px;">Six fields, one civic question</h2>
+          <h2 style="margin-top:10px;" id="homePublishHeading">Six fields, one civic question</h2>
         </div>
-        <p class="desc">Every discipline the Review covers is, at root, a study of how people organize, govern, argue, and build shared institutions.</p>
+        <p class="desc" id="homePublishDesc">Every discipline the Review covers is, at root, a study of how people organize, govern, argue, and build shared institutions.</p>
       </div>
       <div class="num-list" id="fieldsList"></div>
     </div>
@@ -449,7 +449,7 @@
   <section class="tight" style="padding-top:0;">
     <div class="wrap">
       <span class="eyebrow">— Inside the Review</span>
-      <h2 style="margin-top:10px; margin-bottom:36px;">What each issue contains</h2>
+      <h2 style="margin-top:10px; margin-bottom:36px;" id="homeInsideHeading">What each issue contains</h2>
       <div class="inside-grid" id="insideGrid"></div>
     </div>
   </section>
@@ -474,7 +474,7 @@
   <section class="tight">
     <div class="wrap">
       <div class="notice">
-        <p>The Review is currently reading submissions for Volume VII, No. 5 — interdisciplinary work on institutions, technology, and public life is especially welcome.</p>
+        <p id="homeNoticeBanner">The Review is currently reading submissions for Volume VII, No. 5 — interdisciplinary work on institutions, technology, and public life is especially welcome.</p>
         <button class="btn solid" onclick="go('submit')">View submission guidelines</button>
       </div>
     </div>
@@ -621,6 +621,10 @@
           <div>
             <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Author &amp; affiliation</label>
             <input type="text" id="pubAuthor" placeholder="Full name — affiliation" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+          </div>
+          <div>
+            <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Author email</label>
+            <input type="email" id="pubEmail" placeholder="you@example.com" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
           </div>
           <div>
             <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Field</label>
@@ -789,12 +793,54 @@
     <!-- Overview -->
     <div class="dash-panel active" id="dash-overview">
       <div class="wrap">
+        <div id="dashGettingStarted"></div>
         <div class="dash-metrics" id="dashMetrics"></div>
         <div class="side-panel" style="margin-bottom:32px;">
           <h4>Homepage notice</h4>
           <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">This is the message shown on the homepage before you've published your first volume.</p>
           <textarea id="homeNoticeInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
           <div style="margin-top:12px;"><button class="btn small solid" onclick="saveHomeNotice()">Save notice</button></div>
+        </div>
+        <div class="side-panel" style="margin-bottom:32px;">
+          <h4>Editor notification email</h4>
+          <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">Where you get emailed whenever someone submits a new manuscript. Requires email setup — see the comment at the top of the file's script.</p>
+          <input type="email" id="editorEmailInput" placeholder="you@example.com" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+          <div style="margin-top:12px;"><button class="btn small solid" onclick="saveEditorEmail()">Save email</button></div>
+        </div>
+        <div class="side-panel" style="margin-bottom:32px;">
+          <h4>Homepage text</h4>
+          <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:16px;">Edit the wording shown on the public homepage. Plain text only (no bold/italic formatting).</p>
+          <div style="display:grid; gap:16px;">
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Main headline</label>
+              <textarea id="homeHeroHeadlineInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Headline subtext</label>
+              <textarea id="homeHeroDekInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">"About the Review" blurb</label>
+              <textarea id="homeAboutBlurbInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">"What We Publish" heading</label>
+              <input type="text" id="homePublishHeadingInput" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">"What We Publish" description</label>
+              <textarea id="homePublishDescInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">"Inside the Review" heading</label>
+              <input type="text" id="homeInsideHeadingInput" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);">
+            </div>
+            <div>
+              <label style="display:block; font-family:var(--sans); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px;">Bottom call-to-action banner</label>
+              <textarea id="homeNoticeBannerInput" rows="2" style="width:100%; font-family:var(--serif-body); padding:10px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></textarea>
+            </div>
+          </div>
+          <div style="margin-top:16px;"><button class="btn small solid" onclick="saveHomeText()">Save homepage text</button></div>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
           <div>
@@ -815,7 +861,7 @@
         <div class="sec-head" style="margin-bottom:24px;">
           <h2 style="font-size:24px;">Submissions workflow</h2>
           <div style="display:flex; align-items:center; gap:16px;">
-            <p class="desc" style="font-size:13px; margin:0;">Drag a card to move it to the next stage, or click it to open the full editor.</p>
+            <p class="desc" style="font-size:13px; margin:0;">Drag a card between columns, or use its "Move to" dropdown — either moves it through review. Click anywhere else on a card to open the full editor.</p>
             <button class="btn small solid" onclick="toggleForm('quickAddForm')">+ New submission</button>
           </div>
         </div>
@@ -861,13 +907,14 @@
     <!-- Research editor -->
     <div class="dash-panel" id="dash-editor">
       <div class="wrap">
-        <div class="sec-head" style="margin-bottom:24px;">
+        <div class="sec-head" style="margin-bottom:8px;">
           <h2 style="font-size:24px;">Research editor</h2>
           <div style="display:flex; gap:10px; align-items:center;">
             <select id="edPaperSelect" onchange="loadPaperIntoEditor(this.value)" style="font-family:var(--sans); font-size:12.5px; padding:9px 12px; border:1px solid var(--rule-strong); background:var(--cream);"></select>
             <button class="btn small" onclick="newPaperInEditor()">+ New paper</button>
           </div>
         </div>
+        <p class="desc" style="font-size:13px; margin-bottom:24px;">Pick a paper from the dropdown to edit it, or start a new one. "Save" keeps your changes without changing where it appears publicly. A paper only shows up on the site once it's marked Published <strong>and</strong> its volume is published from the Volumes tab.</p>
         <div class="editor-shell">
           <div class="editor-pane">
             <label>Field</label>
@@ -876,6 +923,8 @@
             <input type="text" id="edTitle" placeholder="Paper title">
             <label>Author &amp; affiliation</label>
             <input type="text" id="edAuthor" placeholder="Full name — affiliation">
+            <label>Author email <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--ink-soft);">(for status update emails)</span></label>
+            <input type="email" id="edAuthorEmail" placeholder="author@example.com">
             <label>Abstract</label>
             <div class="editor-toolbar">
               <button title="Bold" onclick="wrapSelection('B')"><b>B</b></button>
@@ -917,9 +966,10 @@
     <!-- People -->
     <div class="dash-panel" id="dash-people">
       <div class="wrap">
-        <div class="sec-head" style="margin-bottom:24px;">
+        <div class="sec-head" style="margin-bottom:8px;">
           <h2 style="font-size:24px;">Authors &amp; editorial board</h2>
         </div>
+        <p class="desc" style="font-size:13px; margin-bottom:24px;">Anyone added here appears on the site's public Authors and Editorial Board pages right away. Click Edit on an existing entry to update it in place, or Remove to take it down.</p>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
           <div>
             <h3 style="font-size:18px; margin-bottom:16px;">Authors</h3>
@@ -1001,6 +1051,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 /* ================= BACKEND CONFIG =================
    1. Create a free project at https://supabase.com
@@ -1009,6 +1060,28 @@
 */
 const SUPABASE_URL = "https://gcnmiwcxyofaxttmobzv.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Ku5LYfTsl4wxtQjtlw_leA_m-AYkMoF";
+
+/* ================= EMAIL NOTIFICATIONS (EmailJS) =================
+   1. Sign up free at https://www.emailjs.com
+   2. Email Services > Add New Service > connect your Gmail/Outlook — copy the Service ID
+   3. Email Templates > Create Template. Make TWO templates:
+      - "New submission" template (sent to you) using variables: {{paper_title}}, {{paper_authors}}, {{paper_field}}, {{paper_abstract}}, {{to_email}}
+      - "Status update" template (sent to authors) using variables: {{paper_title}}, {{status}}, {{to_email}}
+      Copy each Template ID.
+   4. Account > General > copy your Public Key.
+   5. Paste all four values below. Also set your own notification email address
+      under Editorial Dashboard > Overview > "Editor notification email".
+*/
+const EMAILJS_PUBLIC_KEY = "jzMQLg5vHUm1WXGd7";
+const EMAILJS_SERVICE_ID = "service_5qozdbm";
+const EMAILJS_NEW_SUBMISSION_TEMPLATE_ID = "template_l4oami8";
+const EMAILJS_STATUS_UPDATE_TEMPLATE_ID = "template_gpki1hy";
+const EMAIL_CONFIGURED = ![EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_NEW_SUBMISSION_TEMPLATE_ID, EMAILJS_STATUS_UPDATE_TEMPLATE_ID].some(v=>v.startsWith("PASTE_"));
+if(EMAIL_CONFIGURED && window.emailjs){ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); }
+function sendNotificationEmail(templateId, params){
+  if(!EMAIL_CONFIGURED || !window.emailjs){ console.warn('Email notifications are not configured yet — skipping send.'); return; }
+  emailjs.send(EMAILJS_SERVICE_ID, templateId, params).catch(e=>console.error('Email send failed', e));
+}
 
 /* ================= STORAGE SHIM =================
    Everything below stands in for the old Claude-artifact `window.storage`
@@ -1074,7 +1147,17 @@ const STAGES = ["Submission","Reviewing","Editing","Author Review","Approved","S
 /* ================= PERSISTED DATA ================= */
 const STORAGE_KEY = 'civic-review-data';
 const STORAGE_AVAILABLE = (typeof window !== 'undefined' && !!window.storage);
-let data = { papers: [], volumes: [], authors: [], board: [], settings: { homeNotice: 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.' } };
+let data = { papers: [], volumes: [], authors: [], board: [], settings: {
+  homeNotice: 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.',
+  editorEmail: '',
+  homeHeroHeadline: 'Independent research on the ideas, institutions, and economies shaping public life.',
+  homeHeroDek: 'The Civic Review is an interdisciplinary journal publishing rigorous, accessible research across economics, philosophy, politics, public policy, education, and technology & society — read internationally.',
+  homeAboutBlurb: 'A peer-reviewed, editorially independent publication with contributors and reviewers across South Asia, Europe, and North America. Published on a bi-weekly cadence.',
+  homePublishHeading: 'Six fields, one civic question',
+  homePublishDesc: 'Every discipline the Review covers is, at root, a study of how people organize, govern, argue, and build shared institutions.',
+  homeInsideHeading: 'What each issue contains',
+  homeNoticeBanner: 'The Review is currently reading submissions — interdisciplinary work on institutions, technology, and public life is especially welcome.'
+} };
 let currentPaperId = null;
 let editingAuthorId = null;
 let editingBoardId = null;
@@ -1091,6 +1174,17 @@ async function loadData(){
   }
   if(!data.settings) data.settings = {};
   if(!data.settings.homeNotice) data.settings.homeNotice = 'The first issue of The Civic Review is being prepared. Once you publish a volume from the Editorial Dashboard, it will appear here.';
+  if(data.settings.editorEmail === undefined) data.settings.editorEmail = '';
+  const homeDefaults = {
+    homeHeroHeadline: 'Independent research on the ideas, institutions, and economies shaping public life.',
+    homeHeroDek: 'The Civic Review is an interdisciplinary journal publishing rigorous, accessible research across economics, philosophy, politics, public policy, education, and technology & society — read internationally.',
+    homeAboutBlurb: 'A peer-reviewed, editorially independent publication with contributors and reviewers across South Asia, Europe, and North America. Published on a bi-weekly cadence.',
+    homePublishHeading: 'Six fields, one civic question',
+    homePublishDesc: 'Every discipline the Review covers is, at root, a study of how people organize, govern, argue, and build shared institutions.',
+    homeInsideHeading: 'What each issue contains',
+    homeNoticeBanner: 'The Review is currently reading submissions — interdisciplinary work on institutions, technology, and public life is especially welcome.'
+  };
+  Object.keys(homeDefaults).forEach(k=>{ if(data.settings[k] === undefined) data.settings[k] = homeDefaults[k]; });
 }
 async function saveData(){
   if(!STORAGE_AVAILABLE) return;
@@ -1448,8 +1542,54 @@ function saveHomeNotice(){
   data.settings.homeNotice = document.getElementById('homeNoticeInput').value.trim() || data.settings.homeNotice;
   saveData(); renderAllPublic();
 }
+function saveEditorEmail(){
+  data.settings.editorEmail = document.getElementById('editorEmailInput').value.trim();
+  saveData();
+}
+function saveHomeText(){
+  data.settings.homeHeroHeadline = document.getElementById('homeHeroHeadlineInput').value.trim() || data.settings.homeHeroHeadline;
+  data.settings.homeHeroDek = document.getElementById('homeHeroDekInput').value.trim() || data.settings.homeHeroDek;
+  data.settings.homeAboutBlurb = document.getElementById('homeAboutBlurbInput').value.trim() || data.settings.homeAboutBlurb;
+  data.settings.homePublishHeading = document.getElementById('homePublishHeadingInput').value.trim() || data.settings.homePublishHeading;
+  data.settings.homePublishDesc = document.getElementById('homePublishDescInput').value.trim() || data.settings.homePublishDesc;
+  data.settings.homeInsideHeading = document.getElementById('homeInsideHeadingInput').value.trim() || data.settings.homeInsideHeading;
+  data.settings.homeNoticeBanner = document.getElementById('homeNoticeBannerInput').value.trim() || data.settings.homeNoticeBanner;
+  saveData(); renderHomeText();
+}
 function renderDashOverview(){
   document.getElementById('homeNoticeInput').value = data.settings.homeNotice;
+  document.getElementById('editorEmailInput').value = data.settings.editorEmail || '';
+  document.getElementById('homeHeroHeadlineInput').value = data.settings.homeHeroHeadline;
+  document.getElementById('homeHeroDekInput').value = data.settings.homeHeroDek;
+  document.getElementById('homeAboutBlurbInput').value = data.settings.homeAboutBlurb;
+  document.getElementById('homePublishHeadingInput').value = data.settings.homePublishHeading;
+  document.getElementById('homePublishDescInput').value = data.settings.homePublishDesc;
+  document.getElementById('homeInsideHeadingInput').value = data.settings.homeInsideHeading;
+  document.getElementById('homeNoticeBannerInput').value = data.settings.homeNoticeBanner;
+
+  const gs = document.getElementById('dashGettingStarted');
+  const hasVolume = data.volumes.length > 0;
+  const hasPublished = data.papers.some(p=>p.stage==='Published');
+  const hasPeople = data.authors.length > 0 || data.board.length > 0;
+  const hasEditorEmail = !!data.settings.editorEmail;
+  if(!hasVolume || !hasPublished || !hasPeople || !hasEditorEmail){
+    const step = (done, label, tab) => `<div style="display:flex; align-items:center; gap:10px; padding:8px 0;">
+      <span style="width:18px; height:18px; border-radius:50%; border:1px solid ${done?'var(--gold)':'var(--rule-strong)'}; background:${done?'var(--gold)':'transparent'}; color:#fff; font-size:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">${done?'✓':''}</span>
+      <span style="font-family:var(--serif-body); font-size:14px; color:${done?'var(--ink-soft)':'var(--navy-3)'}; ${done?'text-decoration:line-through;':''}">${label}</span>
+      ${!done && tab ? `<button class="btn small" style="margin-left:auto; padding:4px 10px; font-size:10.5px;" onclick="dashTab('${tab}')">Go</button>` : ''}
+    </div>`;
+    gs.innerHTML = `<div class="side-panel" style="margin-bottom:32px;">
+      <h4>Getting started</h4>
+      <p style="font-family:var(--serif-body); font-size:13px; color:var(--ink-soft); margin-top:-6px; margin-bottom:6px;">A few things worth setting up before your first issue goes live.</p>
+      ${step(hasPeople, 'Add authors or board members', 'people')}
+      ${step(hasVolume, 'Create your first volume', 'volumes')}
+      ${step(hasPublished, 'Mark at least one paper Published, then publish its volume', 'editor')}
+      ${step(hasEditorEmail, 'Set your notification email below', null)}
+    </div>`;
+  } else {
+    gs.innerHTML = '';
+  }
+
   const counts = {}; STAGES.forEach(s=>counts[s]=0);
   data.papers.forEach(p=>{ counts[p.stage] = (counts[p.stage]||0)+1; });
   const nextVol = data.volumes.find(v=>v.status!=='published');
@@ -1483,6 +1623,7 @@ async function submitPublicPaper(){
   const status = document.getElementById('pubSubmitStatus');
   const title = document.getElementById('pubTitle').value.trim();
   const authors = document.getElementById('pubAuthor').value.trim();
+  const authorEmail = document.getElementById('pubEmail').value.trim();
   const field = document.getElementById('pubField').value;
   const abstract = document.getElementById('pubAbstract').value.trim();
   const fileInput = document.getElementById('pubFile');
@@ -1508,11 +1649,24 @@ async function submitPublicPaper(){
       manuscriptUrl = pub.publicUrl;
       manuscriptName = file.name;
     }
-    data.papers.push({ id: uid(), title, authors, field, abstract, volumeId:null, stage:'Submission', manuscriptUrl, manuscriptName });
+    data.papers.push({ id: uid(), title, authors, authorEmail, field, abstract, volumeId:null, stage:'Submission', manuscriptUrl, manuscriptName });
     await saveData();
+
+    if(data.settings.editorEmail){
+      sendNotificationEmail(EMAILJS_NEW_SUBMISSION_TEMPLATE_ID, {
+        to_email: data.settings.editorEmail,
+        paper_title: title, paper_authors: authors, paper_field: field, paper_abstract: abstract
+      });
+    }
+    if(authorEmail){
+      sendNotificationEmail(EMAILJS_STATUS_UPDATE_TEMPLATE_ID, {
+        to_email: authorEmail, paper_title: title, status: 'Submission received'
+      });
+    }
 
     document.getElementById('pubTitle').value = '';
     document.getElementById('pubAuthor').value = '';
+    document.getElementById('pubEmail').value = '';
     document.getElementById('pubAbstract').value = '';
     fileInput.value = '';
     status.style.color = 'var(--navy)';
@@ -1559,7 +1713,20 @@ function renderBoard(){
       const card = document.createElement('div');
       card.className='board-card'; card.draggable=true;
       card.dataset.id=s.id;
-      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? `<div class="manuscript-tag" style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px; text-decoration:underline; cursor:pointer;">&#128206; read manuscript</div>` : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>`;
+      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? `<div class="manuscript-tag" style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px; text-decoration:underline; cursor:pointer;">&#128206; read manuscript</div>` : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>
+        <select class="board-card-move" style="width:100%; margin-top:10px; font-family:var(--sans); font-size:11px; padding:4px 6px; border:1px solid var(--rule-strong); background:#fff;">
+          ${STAGES.map(st=>`<option value="${st}" ${st===stage?'selected':''}>Move to: ${st}</option>`).join('')}
+        </select>`;
+      card.querySelector('.board-card-move').addEventListener('click', e=>e.stopPropagation());
+      card.querySelector('.board-card-move').addEventListener('change', e=>{
+        const newStage = e.target.value;
+        if(newStage === s.stage) return;
+        s.stage = newStage;
+        saveData(); renderBoard(); renderDashOverview(); renderEditorSelectors(); renderAllPublic();
+        if(s.authorEmail){
+          sendNotificationEmail(EMAILJS_STATUS_UPDATE_TEMPLATE_ID, { to_email: s.authorEmail, paper_title: s.title, status: newStage });
+        }
+      });
       const tag = card.querySelector('.manuscript-tag');
       if(tag){
         tag.addEventListener('click', (e)=>{ e.stopPropagation(); openManuscriptViewer(s.manuscriptUrl, s.manuscriptName); });
@@ -1586,9 +1753,14 @@ function onDrop(e){
   const id = e.dataTransfer.getData('text/plain');
   const newStage = e.currentTarget.dataset.stage;
   const paper = data.papers.find(s=>s.id===id);
-  if(paper){
+  if(paper && paper.stage !== newStage){
     paper.stage = newStage;
     saveData(); renderBoard(); renderDashOverview(); renderEditorSelectors(); renderAllPublic();
+    if(paper.authorEmail){
+      sendNotificationEmail(EMAILJS_STATUS_UPDATE_TEMPLATE_ID, {
+        to_email: paper.authorEmail, paper_title: paper.title, status: newStage
+      });
+    }
   }
 }
 
@@ -1661,6 +1833,7 @@ function newPaperInEditor(silent){
   document.getElementById('edField').value = FIELDS[0].name;
   document.getElementById('edTitle').value = '';
   document.getElementById('edAuthor').value = '';
+  document.getElementById('edAuthorEmail').value = '';
   document.getElementById('edAbstract').value = '';
   document.getElementById('edVolume').value = '';
   document.getElementById('edStage').value = 'Submission';
@@ -1677,6 +1850,7 @@ function loadPaperIntoEditor(id, silent){
   document.getElementById('edField').value = p.field;
   document.getElementById('edTitle').value = p.title;
   document.getElementById('edAuthor').value = p.authors;
+  document.getElementById('edAuthorEmail').value = p.authorEmail || '';
   document.getElementById('edAbstract').value = p.abstract || '';
   document.getElementById('edVolume').value = p.volumeId || '';
   document.getElementById('edStage').value = p.stage;
@@ -1699,6 +1873,7 @@ function collectEditorFields(){
     field: document.getElementById('edField').value,
     title: document.getElementById('edTitle').value.trim(),
     authors: document.getElementById('edAuthor').value.trim(),
+    authorEmail: document.getElementById('edAuthorEmail').value.trim(),
     abstract: document.getElementById('edAbstract').value.trim(),
     volumeId: document.getElementById('edVolume').value || null,
     stage: document.getElementById('edStage').value
@@ -1707,6 +1882,8 @@ function collectEditorFields(){
 async function savePaper(){
   const f = collectEditorFields();
   if(!f.title || !f.authors){ alert('A title and an author are required.'); return; }
+
+  const previousStage = currentPaperId ? (data.papers.find(p=>p.id===currentPaperId)||{}).stage : null;
 
   const fileInput = document.getElementById('edManuscriptFile');
   const status = document.getElementById('edManuscriptStatus');
@@ -1743,6 +1920,13 @@ async function savePaper(){
   }
   await saveData();
   fileInput.value = '';
+
+  if(previousStage !== null && previousStage !== f.stage && f.authorEmail){
+    sendNotificationEmail(EMAILJS_STATUS_UPDATE_TEMPLATE_ID, {
+      to_email: f.authorEmail, paper_title: f.title, status: f.stage
+    });
+  }
+
   renderEditorSelectors(); renderBoard(); renderDashOverview(); renderDashVolumes(); renderAllPublic();
 }
 async function publishPaper(){
@@ -1865,7 +2049,18 @@ function renderDashPeople(){
 }
 
 /* ================= FULL PUBLIC RE-RENDER ================= */
+function renderHomeText(){
+  const s = data.settings;
+  document.getElementById('homeHeroHeadline').textContent = s.homeHeroHeadline;
+  document.getElementById('homeHeroDek').textContent = s.homeHeroDek;
+  document.getElementById('homeAboutBlurb').textContent = s.homeAboutBlurb;
+  document.getElementById('homePublishHeading').textContent = s.homePublishHeading;
+  document.getElementById('homePublishDesc').textContent = s.homePublishDesc;
+  document.getElementById('homeInsideHeading').textContent = s.homeInsideHeading;
+  document.getElementById('homeNoticeBanner').textContent = s.homeNoticeBanner;
+}
 function renderAllPublic(){
+  renderHomeText();
   renderHomePapers();
   renderResearchList();
   renderVolumes();
