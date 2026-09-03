@@ -488,7 +488,8 @@
       <span class="eyebrow">— Research</span>
       <h1 style="font-size:42px; margin-top:12px;">Browse by field</h1>
       <p class="prose" style="margin-top:18px; font-size:16px;">Every paper published in the Review, organized by discipline. Select a field to narrow the list, or read across all six.</p>
-      <div class="filter-row" id="researchFilters" style="margin-top:36px;"></div>
+      <div id="researchVolumeBanner" style="margin-top:28px;"></div>
+      <div class="filter-row" id="researchFilters" style="margin-top:12px;"></div>
       <div id="researchList" style="margin-top:8px;"></div>
     </div>
   </section>
@@ -888,7 +889,11 @@
             <select id="edStage"></select>
             <div id="edManuscriptLink" style="display:none; margin-top:14px; font-family:var(--sans); font-size:12.5px;">
               <span style="display:block; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; font-size:10.5px; margin-bottom:4px;">Uploaded manuscript</span>
-              <a id="edManuscriptA" href="#" target="_blank" rel="noopener" style="color:var(--navy); border-bottom:1px solid var(--gold);"></a>
+              <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+                <span id="edManuscriptName" style="color:var(--navy-3);"></span>
+                <button class="btn small solid" style="padding:6px 12px; font-size:11px;" onclick="openManuscriptViewer(currentPaperId ? data.papers.find(p=>p.id===currentPaperId).manuscriptUrl : null, currentPaperId ? data.papers.find(p=>p.id===currentPaperId).manuscriptName : null)">Read in browser</button>
+                <a id="edManuscriptA" href="#" target="_blank" rel="noopener" style="color:var(--navy); border-bottom:1px solid var(--gold);">Download original</a>
+              </div>
             </div>
             <label style="margin-top:14px;">Attach / replace manuscript file</label>
             <input type="file" id="edManuscriptFile" accept=".pdf,.doc,.docx" style="font-family:var(--sans); font-size:12.5px;">
@@ -980,6 +985,20 @@
     </div>
   </div>
 </footer>
+
+<!-- ============ MANUSCRIPT / PAPER READER MODAL ============ -->
+<div id="manuscriptViewerOverlay" style="display:none; position:fixed; inset:0; background:rgba(14,28,46,0.85); z-index:200; align-items:center; justify-content:center; padding:24px;">
+  <div style="background:var(--cream); width:100%; max-width:920px; height:88vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; border-bottom:1px solid var(--rule-strong); font-family:var(--sans);">
+      <span id="manuscriptViewerTitle" style="font-size:13px; color:var(--navy-3); font-weight:600;">Manuscript</span>
+      <button onclick="closeManuscriptViewer()" style="border:none; background:none; font-size:20px; cursor:pointer; color:var(--navy-3);">&times;</button>
+    </div>
+    <div style="flex:1; overflow:hidden; position:relative;">
+      <iframe id="manuscriptViewerFrame" src="" style="width:100%; height:100%; border:none; display:none;"></iframe>
+      <div id="manuscriptViewerText" style="display:none; height:100%; overflow-y:auto; padding:36px 44px;"></div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -1095,7 +1114,13 @@ function go(page){
   document.querySelectorAll('nav.primary a').forEach(a=>a.classList.toggle('active', a.dataset.page===page));
   window.scrollTo({top:0, behavior:'instant'});
 }
-function navClick(e,page){ e.preventDefault(); go(page); return false; }
+function navClick(e,page){
+  e.preventDefault();
+  if(page==='research') researchVolumeFilter = null;
+  go(page);
+  if(page==='research') renderResearchList();
+  return false;
+}
 function toggleMobileNav(){
   const nav = document.getElementById('primaryNav');
   nav.style.display = (nav.style.display==='flex') ? 'none' : 'flex';
@@ -1104,6 +1129,50 @@ function toggleMobileNav(){
 function openSearch(){
   go('archive');
   setTimeout(()=>document.getElementById('archiveSearch').focus(), 50);
+}
+function openManuscriptViewer(url, name){
+  if(!url){ alert('No manuscript file is attached to this paper.'); return; }
+  const ext = (name||url).split('.').pop().toLowerCase();
+  const frame = document.getElementById('manuscriptViewerFrame');
+  const textEl = document.getElementById('manuscriptViewerText');
+  textEl.style.display = 'none';
+  frame.style.display = 'block';
+  if(ext === 'pdf'){
+    frame.src = url;
+  } else {
+    // Word docs can't be rendered natively in a browser — use Google's public viewer
+    frame.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(url) + '&embedded=true';
+  }
+  document.getElementById('manuscriptViewerTitle').textContent = name || 'Manuscript';
+  document.getElementById('manuscriptViewerOverlay').style.display = 'flex';
+}
+function openPaperReader(id){
+  const p = data.papers.find(x=>x.id===id);
+  if(!p) return;
+  const frame = document.getElementById('manuscriptViewerFrame');
+  const textEl = document.getElementById('manuscriptViewerText');
+  document.getElementById('manuscriptViewerTitle').textContent = p.title || 'Untitled paper';
+  if(p.manuscriptUrl){
+    openManuscriptViewer(p.manuscriptUrl, p.manuscriptName);
+    return;
+  }
+  frame.style.display = 'none';
+  frame.src = '';
+  textEl.style.display = 'block';
+  const vol = volumeById(p.volumeId);
+  textEl.innerHTML = `
+    <div style="font-family:var(--sans); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;">${p.field}${vol ? ' &middot; Vol. '+vol.number+', '+vol.issue : ''}</div>
+    <div style="font-family:var(--serif-display); font-size:30px; color:var(--navy-3); line-height:1.2; margin-bottom:10px;">${p.title||'Untitled paper'}</div>
+    <div style="font-family:var(--sans); font-size:13px; color:var(--ink-soft); font-style:italic; margin-bottom:24px;">${p.authors||''}</div>
+    <div style="font-family:var(--serif-body); font-size:16px; line-height:1.7; color:var(--ink);">${p.abstract || 'No abstract available.'}</div>
+    <div style="margin-top:32px; font-family:var(--sans); font-size:12.5px; color:var(--ink-soft); border-top:1px solid var(--rule); padding-top:16px;">The full manuscript for this paper hasn't been uploaded yet — only the abstract is available to read.</div>
+  `;
+  document.getElementById('manuscriptViewerOverlay').style.display = 'flex';
+}
+function closeManuscriptViewer(){
+  document.getElementById('manuscriptViewerOverlay').style.display = 'none';
+  document.getElementById('manuscriptViewerFrame').src = '';
+  document.getElementById('manuscriptViewerText').innerHTML = '';
 }
 function toggleForm(id){
   const el = document.getElementById(id);
@@ -1137,7 +1206,7 @@ function renderInside(){
 function paperRow(p, idx){
   const vol = volumeById(p.volumeId);
   const volLabel = vol ? `Vol. ${vol.number}, ${vol.issue}` : '';
-  return `<div class="paper-row">
+  return `<div class="paper-row" onclick="openPaperReader('${p.id}')" style="cursor:pointer;">
     <div class="paper-idx">${String(idx+1).padStart(2,'0')}</div>
     <div>
       <div class="paper-field">${p.field}${volLabel ? ' &middot; '+volLabel : ''}</div>
@@ -1145,7 +1214,7 @@ function paperRow(p, idx){
       <div class="paper-authors">${p.authors}</div>
       <div class="paper-abstract">${p.abstract}</div>
     </div>
-    <div class="paper-link">&nbsp;</div>
+    <div class="paper-link">${p.manuscriptUrl ? 'Read paper →' : 'Read abstract →'}</div>
   </div>`;
 }
 function renderHomePapers(){
@@ -1170,7 +1239,7 @@ function renderHomePapers(){
     </div>
     ${latest.theme ? `<div class="issue-theme">${latest.theme}</div>` : '<div style="margin-bottom:24px;"></div>'}
     ${papers.length ? papers.map((p,i)=>paperRow(p,i)).join('') : '<div class="empty-state">No papers published in this issue yet.</div>'}
-    <div style="margin-top:28px;"><button class="btn small" onclick="go('volumes')">View full volume</button></div>
+    <div style="margin-top:28px;"><button class="btn small" onclick="openVolume('${latest.id}')">View full volume</button></div>
   `;
 }
 function formatDate(iso){
@@ -1182,6 +1251,7 @@ function formatDate(iso){
 
 /* ================= RENDER: RESEARCH ================= */
 let researchFilter = "All";
+let researchVolumeFilter = null;
 function renderResearchFilters(){
   const fields = ["All", ...FIELDS.map(f=>f.name)];
   document.getElementById('researchFilters').innerHTML = fields.map(f=>
@@ -1189,9 +1259,26 @@ function renderResearchFilters(){
   ).join('');
 }
 function setResearchFilter(f){ researchFilter=f; renderResearchFilters(); renderResearchList(); }
+function openVolume(volumeId){
+  researchVolumeFilter = volumeId;
+  go('research');
+  renderResearchList();
+}
+function clearVolumeFilter(){
+  researchVolumeFilter = null;
+  renderResearchList();
+}
 function renderResearchList(){
   const all = publicPapers();
-  const list = researchFilter==="All" ? all : all.filter(p=>p.field===researchFilter);
+  let list = researchFilter==="All" ? all : all.filter(p=>p.field===researchFilter);
+  const banner = document.getElementById('researchVolumeBanner');
+  if(researchVolumeFilter){
+    const vol = volumeById(researchVolumeFilter);
+    list = list.filter(p=>p.volumeId===researchVolumeFilter);
+    if(banner) banner.innerHTML = vol ? `<div style="display:flex; justify-content:space-between; align-items:center; background:var(--navy); color:#fff; padding:12px 18px; font-family:var(--sans); font-size:12.5px; margin-bottom:24px;"><span>Showing Volume ${vol.number}, ${vol.issue}${vol.theme ? ' — '+vol.theme : ''}</span><button onclick="clearVolumeFilter()" style="background:none; border:1px solid rgba(255,255,255,0.4); color:#fff; padding:4px 10px; cursor:pointer; font-family:var(--sans); font-size:11px;">Show all volumes</button></div>` : '';
+  } else if(banner){
+    banner.innerHTML = '';
+  }
   document.getElementById('researchList').innerHTML = list.length ? list.map((p,i)=>paperRow(p,i)).join('') :
     `<div class="archive-empty">No published papers in this field yet.</div>`;
 }
@@ -1212,7 +1299,7 @@ function renderVolumes(){
         <div class="volume-title">${v.theme || 'Untitled issue'} ${i===0?'<span class="tag-current">Current issue</span>':''}</div>
         <div class="volume-sub">Volume ${v.number}, ${v.issue} &nbsp;·&nbsp; ${formatDate(v.date)} &nbsp;·&nbsp; ${count} paper${count===1?'':'s'}</div>
       </div>
-      <button class="btn small" onclick="go('research')">Read issue</button>
+      <button class="btn small" onclick="openVolume('${v.id}')">Read issue</button>
     </div>`;
   }).join('');
 }
@@ -1472,7 +1559,11 @@ function renderBoard(){
       const card = document.createElement('div');
       card.className='board-card'; card.draggable=true;
       card.dataset.id=s.id;
-      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? '<div style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px;">&#128206; manuscript attached</div>' : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>`;
+      card.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;"><div style="min-width:0;"><div class="t">${s.title||'Untitled paper'}</div><div class="a">${s.authors||''}</div>${s.manuscriptUrl ? `<div class="manuscript-tag" style="font-family:var(--sans); font-size:10.5px; color:var(--gold); margin-top:4px; text-decoration:underline; cursor:pointer;">&#128206; read manuscript</div>` : ''}</div><button class="board-card-delete" title="Delete submission" style="flex-shrink:0; border:none; background:none; color:#a32d2d; font-size:16px; line-height:1; cursor:pointer; padding:2px 4px;">&times;</button></div>`;
+      const tag = card.querySelector('.manuscript-tag');
+      if(tag){
+        tag.addEventListener('click', (e)=>{ e.stopPropagation(); openManuscriptViewer(s.manuscriptUrl, s.manuscriptName); });
+      }
       card.querySelector('.board-card-delete').addEventListener('click', (e)=>{
         e.stopPropagation();
         if(!confirm(`Delete "${s.title || 'this submission'}" permanently?`)) return;
@@ -1591,9 +1682,10 @@ function loadPaperIntoEditor(id, silent){
   document.getElementById('edStage').value = p.stage;
   const link = document.getElementById('edManuscriptLink');
   const a = document.getElementById('edManuscriptA');
+  const nameSpan = document.getElementById('edManuscriptName');
   if(p.manuscriptUrl){
     a.href = p.manuscriptUrl;
-    a.textContent = p.manuscriptName || 'Download manuscript';
+    nameSpan.textContent = p.manuscriptName || 'manuscript file';
     link.style.display = 'block';
   } else {
     link.style.display = 'none';
